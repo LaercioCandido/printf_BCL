@@ -12,6 +12,7 @@
 
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdio.h>
 
 typedef struct s_flags{
     int     minus;
@@ -27,7 +28,7 @@ void    init(t_flags *flags)
 {
     flags->minus = 0;
     flags->zero = 0;
-    flags->star = 0;  // 1 para largura / 2 para precisao / 3 printa valor do argumento (quando point = 1)
+    flags->star = 0; // 1 para largura / 2 para precisao / 3 printa valor do argumento (quando point == -2)
     flags->point = -1;
     flags->width = 0;
     flags->len = 0;
@@ -37,13 +38,6 @@ void    init(t_flags *flags)
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
-}
-
-int		ft_isnum(char n)
-{
-	if (n < '0' || n > '9')
-		return (0);
-	return (1);
 }
 
 void	ft_putnbr(int n)
@@ -62,58 +56,84 @@ void	ft_putnbr(int n)
 	ft_putchar(i % 10 + 48);
 }
 
-void checkflag(const char f, t_flags flags)
+int	ft_isnum(int c)
 {
-  if(f == '-')
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
+}
+
+void checkflag(const char f, t_flags *flags)
+{
+  //printf("AAAAA %c\n", f);
+  if (f == '-')
   {
     flags->minus = 1;
     flags->zero = 0;
   }
-  if(f == '0' && flags->minus != 1 && flags->width == 0)
+  if (f == '0' && flags->minus != 1 && flags->width == 0)
     flags->zero = 1;
-  if(f == '.')
+  if (f == '.')
   {
-    flags->point = (flags->point == -1) ? 0 : 1;
+    flags->point = (flags->point == -1) ? 0 : -2;
+    //printf("flags.point:\n");
     // if (flags.point == -1 )
     //   flags->point = 0;
     // else
-    //   flags->point = 1;
+    //   flags->point = -2;
   }
-  if(f == '*')
+  if (f == '*')
   {
-    if(flags->point == -1)
+    if (flags->point == -1)
       flags->star = 1;
-    if(flags->point == 0)
-      flags->star = 2;
-    if(flags->point == 1)
-      flags->star = 3;
+    else
+      flags->star = (flags->star == 0) ? 2 : 3;
 
+    // if(flags->point == 0)
+    //   flags->star = 2;
+    // if(flags->point == 1)
+    //   flags->star = 3;
   }
 }
 
 int readflag(t_flags *flags, const char *str)
 {
   int i;
+  //int j;
 
+  //printf("CCC %s\n", str);
   i = 0;
   while(str[i] == '-' || str[i] == '*' || str[i] == '.' || ft_isnum(str[i]))
   {
+    //printf("BBB %c", str[i]);
     checkflag(str[i], flags);
-
-
-    i++;
+    //j = i;
+    if (ft_isnum(str[i]))
+      while (ft_isnum(str[i]))
+        {
+            //printf("a\n");
+            if (flags->point == -1)
+                flags->width = (flags->width * 10) + (str[i] - '0');
+            if (flags->point >= 0)
+                flags->point = (flags->point * 10) + (str[i] - '0');
+            i++;
+        }
+    else
+      i++; //esse i++ dá pau?
   }
+  flags->type = str[i];
+  flags->len = i;
+  return (i);
 }
-
 
 int ft_printf(const char *str, ...)
 {
-    int     i;
+    int     count;
     va_list args;
     int     number;
     t_flags flags;
 
-    i= 0;
+    count = 0;
     va_start(args, str);
     while (*str)
     {
@@ -122,10 +142,18 @@ int ft_printf(const char *str, ...)
             init(&flags);
             str++;
             readflag(&flags, str);
-            if (*str == 'd')
+            printf("\nminus = %d\n",flags.minus);
+            printf("point = %d\n",flags.point);
+            printf("star = %d\n",flags.star);
+            printf("width = %d\n",flags.width);
+            printf("zero = %d\n",flags.zero);
+            printf("type = %c\n",flags.type);
+            printf("len = %d\n",flags.len);
+            if (flags.type == 'd')
             {
                 number = va_arg(args, int);
                 ft_putnbr(number);
+                str = str + flags.len; /////
             }
         }
         else
@@ -133,13 +161,13 @@ int ft_printf(const char *str, ...)
             ft_putchar(*str);
         }
         str++;
-        i++;
+        count++;
     }
-    return (i);
+    return (count);
 }
 
 int main()
 {
-    ft_printf("camilo  %d  %d\n", 24, 42);
+    ft_printf("camilo  %*d %.*d %*.*d\n", 2, 89, 42);
     return (0);
 }
