@@ -126,11 +126,55 @@ int readflag(t_flags *flags, const char *str)
   return (i);
 }
 
+int ft_numlen(int num)
+{
+  int i;
+
+  i = 1;
+  while (num >= 10 || num <= -10)
+  {
+      num /= 10;
+      i++;
+  }
+  return (i);
+}
+
+int ft_printf_d(t_flags flags, int number)
+{
+  int len;
+  int width;
+
+  width = flags.width;
+  len = ft_numlen(number);
+  if (flags.len == 0 || (len >= flags.width && len >= flags.point))
+    ft_putnbr(number);
+  if (len < flags.width && len < flags.point)
+  {
+    if(flags.width > flags.point)
+    {
+      while(width - len)
+      {
+        //printf("RODANDO AQUI!");
+        ft_putchar(' ');
+        width--;
+
+      }
+      ft_putnbr(number);
+    }
+    else
+    {
+
+    }
+  }
+
+  return (0);
+}
+
 int ft_printf(const char *str, ...)
 {
     int     count;
     va_list args;
-    int     number;
+    //int     number;
     t_flags flags;
 
     count = 0;
@@ -142,17 +186,18 @@ int ft_printf(const char *str, ...)
             init(&flags);
             str++;
             readflag(&flags, str);
-            printf("\nminus = %d\n",flags.minus);
-            printf("point = %d\n",flags.point);
-            printf("star = %d\n",flags.star);
-            printf("width = %d\n",flags.width);
-            printf("zero = %d\n",flags.zero);
-            printf("type = %c\n",flags.type);
-            printf("len = %d\n",flags.len);
+            // printf("\nminus = %d\n",flags.minus);
+            // printf("point = %d\n",flags.point);
+            // printf("star = %d\n",flags.star);
+            // printf("width = %d\n",flags.width);
+            // printf("zero = %d\n",flags.zero);
+            // printf("type = %c\n",flags.type);
+            // printf("len = %d\n",flags.len);
             if (flags.type == 'd')
             {
-                number = va_arg(args, int);
-                ft_putnbr(number);
+                ft_printf_d(flags, va_arg(args, int));
+              //  number = va_arg(args, int);
+              //  ft_putnbr(number);
                 str = str + flags.len; /////
             }
         }
@@ -168,6 +213,28 @@ int ft_printf(const char *str, ...)
 
 int main()
 {
-    ft_printf("camilo  %*d %.*d %*.*d\n", 2, 89, 42);
+
+
+    ft_printf("teste %1.2d\n", 421);
+    printf("teste %1.2d\n", 421);
+      printf("\n");
+    ft_printf("teste %1.3d\n", 42);
+    printf("teste %1.3d\n", 42);
+      printf("\n");
+    ft_printf("teste %2.1d\n", 421);
+    printf("teste %2.1d\n", 421);
+      printf("\n");
+    ft_printf("teste %2.3d\n", 4);
+      printf("teste %2.3d\n", 4);
+        printf("\n");
+    ft_printf("teste %3.1d\n", 42);
+    printf("teste %3.1d\n", 42);
+      printf("\n");
+    ft_printf("teste %3.2d\n", 4);
+    printf("teste %3.2d\n", 4);
+    printf("\n");
+
+
+
     return (0);
 }
