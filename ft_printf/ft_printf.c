@@ -139,78 +139,30 @@ int ft_numlen(int num)
   return (i);
 }
 
-int ft_printf_d(t_flags flags, int number)
+int ft_printf_d(t_flags *flags, int number)
 {
   int len;
-  int width;
-  int point;
 
-  width = flags.width;
-  point = flags.point;
   len = ft_numlen(number);
-  if (flags.len == 0 || (len >= flags.width && len >= flags.point))
+  if (flags->len == 0 || (len >= flags->width && len >= flags->point))
     ft_putnbr(number);
-    /*
-               printf("\nminus = %d\n",flags.minus);
-               printf("point = %d\n",flags.point);
-               printf("star = %d\n",flags.star);
-               printf("width = %d\n",flags.width);
-               printf("zero = %d\n",flags.zero);
-               printf("type = %c\n",flags.type);
-               printf("len = %d\n",flags.len);
-    */
-
-   else if (flags.width > flags.point && flags.point > len)
-   {
-     while (width-- - point)
-     {
-       ft_putchar(' ');
-       //width--;
-     }
-     while (point-- - len)
-     {
-       ft_putchar('0');
-       //point--;
-     }
-     ft_putnbr(number);
-   }
-   else if (flags.width > len && len > flags.point)
-   {
-     while (width - len)
-      {
-        ft_putchar(' ');
-        width--;
-      }
-      ft_putnbr(number);
-   }
-   else if (flags.point > flags.width)
-   {
-     while (point - len)
-     {
-       ft_putchar('0');
-       point--;
-     }
-     ft_putnbr(number);
-   }
-   
-/*
-  if (len < flags.width || len < flags.point)
+  else
   {
-    if(flags.width > flags.point)
-    {
-      while(width - len)
-      {
+   if (flags->width > flags->point && flags->point > len)
+   {
+     while (flags->width-- - flags->point)
+       ft_putchar(' ');
+     while (flags->point-- - len)
+       ft_putchar('0');
+   }
+   else if (flags->width > len && len > flags->point)
+     while (flags->width-- - len)
         ft_putchar(' ');
-        width--;
-      }
-      ft_putnbr(number);
-    }
-    else
-    {
-
-    }
+   else if (flags->point > flags->width)
+     while (flags->point-- - len)
+       ft_putchar('0');
+   ft_putnbr(number);
   }
-*/
   return (0);
 }
 
@@ -230,7 +182,7 @@ int ft_printf(const char *str, ...)
             init(&flags);
             str++;
             readflag(&flags, str);
-            /* 
+            /*
                printf("\nminus = %d\n",flags.minus);
                printf("point = %d\n",flags.point);
                printf("star = %d\n",flags.star);
@@ -241,7 +193,7 @@ int ft_printf(const char *str, ...)
             */
             if (flags.type == 'd')
             {
-                ft_printf_d(flags, va_arg(args, int));
+                ft_printf_d(&flags, va_arg(args, int));
               //  number = va_arg(args, int);
               //  ft_putnbr(number);
                 str = str + flags.len; /////
@@ -261,28 +213,28 @@ int main()
 {
 
 
-    ft_printf("teste %1.2d\n", 421);
-    printf("teste %1.2d\n", 421);
+    ft_printf("teste %1.2d teste\n", 421);
+    printf("teste %1.2d teste\n", 421);
       printf("\n");
 
-    ft_printf("teste %1.3d\n", 42);
-    printf("teste %1.3d\n", 42);
+    ft_printf("teste %1.3d teste\n", 42);
+    printf("teste %1.3d teste\n", 42);
       printf("\n");
 
-    ft_printf("teste %2.1d\n", 421);
-    printf("teste %2.1d\n", 421);
+    ft_printf("teste %2.1d teste\n", 421);
+    printf("teste %2.1d teste\n", 421);
       printf("\n");
 
-    ft_printf("teste %2.3d\n", 4);
-      printf("teste %2.3d\n", 4);
+    ft_printf("teste %2.3dteste\n", 4);
+      printf("teste %2.3dteste\n", 4);
         printf("\n");
 
-    ft_printf("teste %3.1d\n", 42);
-    printf("teste %3.1d\n", 42);
+    ft_printf("teste %3.1dteste\n", 42);
+    printf("teste %3.1dteste\n", 42);
       printf("\n");
 
-    ft_printf("teste %3.2d\n", 4);
-    printf("teste %3.2d\n", 4);
+    ft_printf("teste %3.2dteste\n", 4);
+    printf("teste %3.2dteste\n", 4);
     printf("\n");
 
 
