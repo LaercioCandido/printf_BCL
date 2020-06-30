@@ -143,8 +143,10 @@ int ft_printf_d(t_flags flags, int number)
 {
   int len;
   int width;
+  int point;
 
   width = flags.width;
+  point = flags.point;
   len = ft_numlen(number);
   if (flags.len == 0 || (len >= flags.width && len >= flags.point))
     ft_putnbr(number);
@@ -157,16 +159,49 @@ int ft_printf_d(t_flags flags, int number)
                printf("type = %c\n",flags.type);
                printf("len = %d\n",flags.len);
     */
+
+   else if (flags.width > flags.point && flags.point > len)
+   {
+     while (width-- - point)
+     {
+       ft_putchar(' ');
+       //width--;
+     }
+     while (point-- - len)
+     {
+       ft_putchar('0');
+       //point--;
+     }
+     ft_putnbr(number);
+   }
+   else if (flags.width > len && len > flags.point)
+   {
+     while (width - len)
+      {
+        ft_putchar(' ');
+        width--;
+      }
+      ft_putnbr(number);
+   }
+   else if (flags.point > flags.width)
+   {
+     while (point - len)
+     {
+       ft_putchar('0');
+       point--;
+     }
+     ft_putnbr(number);
+   }
+   
+/*
   if (len < flags.width || len < flags.point)
   {
     if(flags.width > flags.point)
     {
       while(width - len)
       {
-        //printf("RODANDO AQUI!");
         ft_putchar(' ');
         width--;
-
       }
       ft_putnbr(number);
     }
@@ -175,7 +210,7 @@ int ft_printf_d(t_flags flags, int number)
 
     }
   }
-
+*/
   return (0);
 }
 
