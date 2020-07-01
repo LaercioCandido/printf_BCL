@@ -142,7 +142,7 @@ int ft_printf_d(t_flags *flags, int number)
 		else if (flags->width > len && len > flags->point)
 			while (flags->width-- - len)
 				ft_putchar(' ');
-		else if (flags->point > flags->width)
+		else if (flags->point >= flags->width)
 			while (flags->point-- - len)
 				ft_putchar('0');
 		ft_putnbr(number);
@@ -239,11 +239,23 @@ int main()
 	printf("\n");
 
 	ft_printf("teste %5.1dteste\n", 42);
-	printf("teste %-5.1dteste\n", 42);
+	printf("teste %5.1dteste\n", 42);
+	printf("\n");
+
+	ft_printf("teste %5.5dteste\n", 4);
+	printf("teste %5.5dteste\n", 4);
+	printf("\n");
+
+	ft_printf("teste %5.5dteste\n", 44444);
+	printf("teste %5.5dteste\n", 44444);
+	printf("\n");
+
+	ft_printf("teste %5.5dteste\n", 4444444);
+	printf("teste %5.5dteste\n", 4444444);
 	printf("\n");
 
 	ft_printf("teste %5.2dteste\n", 4);
-	printf("teste %-5.2dteste\n", 4);
+	printf("teste %5.2dteste\n", 4);
 	printf("\n");
 
 
