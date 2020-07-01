@@ -10,186 +10,232 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include <unistd.h>
+#include <stdarg.h>
+#include <stdio.h>
 
-int     ft_printf(const char *input, ...)
+typedef struct s_flags{
+	int		minus;
+	int		zero;
+	int		star;
+	int		point;
+	int		width;
+	int		len;
+	char	type;
+} t_flags;
+
+void    init(t_flags *flags)
 {
-	int d;
-	int valnum;
-	int length;
-	unsigned int x;
-	char *s;
-	unsigned long int p;
-	//valnum tem que ser o atoi do input
+	flags->minus = 0;
+	flags->zero = 0;
+	flags->star = 0; // 1 para largura / 2 para precisao / 3 printa valor do argumento (quando point == -2)
+	flags->point = -1;
+	flags->width = 0;
+	flags->len = 0;
+	flags->type = '\0';
+}
 
-	va_list args;
-	va_start(args, input);
-	while(*input != '\0')
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putnbr(int n)
+{
+	unsigned	i;
+
+	if (n < 0)
 	{
-		if (*input == '%')
+		ft_putchar('-');
+		i = n * -1;
+	}
+	else
+		i = n;
+	if (i >= 10)
+		ft_putnbr(i / 10);
+	ft_putchar(i % 10 + 48);
+}
+
+int	ft_isnum(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
+}
+
+void checkflag(const char f, t_flags *flags)
+{
+	if (f == '-')
+	{
+		flags->minus = 1;
+		flags->zero = 0;
+	}
+	if (f == '0' && flags->minus != 1 && flags->width == 0)
+		flags->zero = 1;
+	if (f == '.')
+	{
+		flags->point = (flags->point == -1) ? 0 : -2;
+	}
+	if (f == '*')
+	{
+		if (flags->point == -1)
+			flags->star = 1;
+		else
+			flags->star = (flags->star == 0) ? 2 : 3;
+	}
+}
+
+int readflag(t_flags *flags, const char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i] == '-' || str[i] == '*' || str[i] == '.' || ft_isnum(str[i]))
+	{
+		checkflag(str[i], flags);
+		if (ft_isnum(str[i]))
+			while (ft_isnum(str[i]))
+			{
+				if (flags->point == -1)
+					flags->width = (flags->width * 10) + (str[i] - '0');
+				if (flags->point >= 0)
+					flags->point = (flags->point * 10) + (str[i] - '0');
+				i++;
+			}
+		else
+		  i++; //esse i++ dá pau?
+	}
+	flags->type = str[i];
+	flags->len = i;
+	return (i);
+}
+
+int ft_numlen(int num)
+{
+	int i;
+
+	i = 1;
+	while (num >= 10 || num <= -10)
+	{
+		num /= 10;
+		i++;
+	}
+	return (i);
+}
+
+int ft_printf_d(t_flags *flags, int number)
+{
+	int len;
+
+	len = ft_numlen(number);
+  if(flags->star == 1)
+  {
+    //printf("star = %d",len);
+    flags->star = number;
+    while (flags->star--)
+      ft_putchar(' ');
+  }
+	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
+		ft_putnbr(number);
+	else
+	{
+		if ((flags->width > flags->point && flags->point > len))
 		{
-			input++;
-			valnum = ft_atoi(input);
-			if (*input == '%')
-				ft_putchar(*input);
-			if (*input == '+')
-			{
-				input++;
-				if (*input == 'd' || *input == 'i')
-				{
-					input++;
-					d = va_arg(args, int);
-					if (d >= 0)
-						ft_putchar('+');
-					ft_putnbr(d);
-				}
-				ft_putchar(*input);
-			}
-			if (*input == '.')
-			{
-				input++;
-				/*valnum = ft_atoi(input);
-				printf("valnum = %d\n", valnum);
-				while (valnum >= 0)
-				{
-					ft_printf("valnum = %d\n", valnum);
-					valnum--;
-				}*/
-				if (*input == 's')
-				{
-					input++;
-					ft_putchar(*input);
-				}
-			}
-			if (*input == '-')
-			{
-				input++;
-				valnum = ft_atoi(input);
-				while (ft_isnum(*input))
-					input++;
-				if (*input == 'd' || *input == 'i')
-				{
-					input++;
-					d = va_arg(args, int);
-					ft_putnbr(d);
-				}
-				if (d < 0)
-					valnum--;
-				if (*input == 'c')
-				{
-					input++;
-					ft_putchar((char)va_arg(args, int));
-				}
-				if (*input == 's')
-				{
-					input++;
-					s = va_arg(args, char *);
-					if (s == 0)
-						ft_printf("(null)");
-					else
-						ft_printf(s);
-				}
-				length = ft_strlen(s);
-				while (length >= 0)
-				{
-				length--;
-				valnum--;
-				}
-				while (valnum > 1 && *input++ != '%')
-				{
-					ft_putchar(' ');
-					valnum--;
-				}
-				ft_putchar(*input);
+			while (flags->width-- - flags->point)
+				ft_putchar(' ');
+			while (flags->point-- - len)
+				ft_putchar('0');
+		}
+		else if (flags->width > len && len > flags->point)
+			while (flags->width-- - len)
+				ft_putchar(' ');
+		else if (flags->point > flags->width)
+			while (flags->point-- - len)
+				ft_putchar('0');
+		ft_putnbr(number);
+	}
+	return (0);
+}
 
-			}
-			if (*input == '0')
-			{
-				input++;
-				valnum = ft_atoi(input);
-				while(ft_isnum(*input))
-					input++;
-				while (valnum > 1)
-				{
-					valnum--;
-					ft_putchar('0');
-				}
+int ft_printf(const char *str, ...)
+{
+	int     count;
+	va_list args;
+	//int     number;
+	t_flags flags;
 
-			}
-			if (ft_isnum(*input) && *input != '0')
+		count = 0;
+	va_start(args, str);
+	while (*str)
+	{
+		if (*str == '%')
+		{
+			init(&flags);
+			str++;
+			readflag(&flags, str);
+			/*
+			printf("\nminus = %d\n",flags.minus);
+			printf("point = %d\n",flags.point);
+			printf("star = %d\n",flags.star);
+			printf("width = %d\n",flags.width);
+			printf("zero = %d\n",flags.zero);
+			printf("type = %c\n",flags.type);
+			printf("len = %d\n",flags.len);
+			*/
+			if (flags.type == 'd')
 			{
-				while (ft_isnum(*input) && *input != '0')
-					input++;
-				if (*input == '%')
-					ft_putchar('%');
-				if(*input == '.')
-				{
-					input++;
-					valnum = ft_atoi(input);
-					s = va_arg(args, char *);
-					d = 0;
-					while (valnum > 0 && *s != '\0')
-					{
-						ft_putchar(s[d]);
-						valnum--;
-						d++;
-					}
-					input++;
-					if (*input == 's')
-					{
-						input++;
-						ft_putchar(*input);
-					}
-
-				}
-			}
-			if (*input == 'd' || *input == 'i')
-			{
-				ft_putnbr(va_arg(args, int));
-			}
-			if (*input == 'c')
-			{
-				ft_putchar((char)va_arg(args, int));
-			}
-			if (*input == 's')
-			{
-				s = va_arg(args, char *);
-				if (s == 0)
-					ft_printf("(null)");
-				else
-					ft_printf(s);
-			}
-			if (*input == 'x')
-			{
-				x = va_arg(args, unsigned int);
-				ft_puthex(x);
-			}
-			if (*input == 'X')
-			{
-				x = va_arg(args, unsigned int);
-				ft_puthex(x);
-			}
-			if (*input == 'p')
-			{
-				p = va_arg(args, unsigned long int);
-				if (p == 0)
-					ft_printf("(nil)");
-				else
-				{
-					ft_printf("0x");
-					ft_puthex(p);
-				}
-			}
-			if (*input == 'u')
-			{
-				x = va_arg(args, unsigned int);
-				ft_putnbr(x);
+				ft_printf_d(&flags, va_arg(args, int));
+			//  number = va_arg(args, int);
+			//  ft_putnbr(number);
+				str = str + flags.len; /////
 			}
 		}
 		else
-			ft_putchar(*input);
-		input++;
+		{
+			ft_putchar(*str);
+		}
+		str++;
+		count++;
 	}
-	va_end(args);
+	return (count);
+}
+
+int main()
+{
+
+
+	ft_printf("teste %1.2d teste\n", 421);
+	printf("teste %1.2d teste\n", 421);
+	printf("\n");
+
+	ft_printf("teste %1.3d teste\n", 42);
+	printf("teste %1.3d teste\n", 42);
+	printf("\n");
+
+	ft_printf("teste %2.1d teste\n", 421);
+	printf("teste %2.1d teste\n", 421);
+	printf("\n");
+
+	ft_printf("teste %2.3dteste\n", 4);
+	printf("teste %2.3dteste\n", 4);
+		printf("\n");
+
+	ft_printf("teste %3.1dteste\n", 42);
+	printf("teste %3.1dteste\n", 42);
+	printf("\n");
+
+	ft_printf("teste %3.2dteste\n", 4);
+	printf("teste %3.2dteste\n", 4);
+	printf("\n");
+
+  ft_printf("teste %*dteste\n", 3, 5);
+	printf("teste %*dteste\n", 3, 5);
+  printf("\n");
+
+  ft_printf("teste %2*dteste\n", 3, 5);
+  printf("teste %2*dteste\n", 3, 5);
+  printf("\n");
+
+
 	return (0);
 }
