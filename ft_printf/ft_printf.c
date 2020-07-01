@@ -196,7 +196,7 @@ int ft_printf(const char *str, ...)
 int main()
 {
 
-
+	/*
 	ft_printf("teste %1.2d teste\n", 421);
 	printf("teste %1.2d teste\n", 421);
 	printf("\n");
@@ -220,6 +220,33 @@ int main()
 	ft_printf("teste %3.2dteste\n", 4);
 	printf("teste %3.2dteste\n", 4);
 	printf("\n");
+	*/
+
+	ft_printf("teste %1.2d teste\n", 4210);
+	printf("teste %-1.2d teste\n", 4210);
+	printf("\n");
+
+	ft_printf("teste %2.1d teste\n", 4210);
+	printf("teste %-2.1d teste\n", 4210);
+	printf("\n");
+
+	ft_printf("teste %1.5d teste\n", 42);
+	printf("teste %-1.5d teste\n", 42);
+	printf("\n");
+
+	ft_printf("teste %2.5dteste\n", 4);
+	printf("teste %-2.5dteste\n", 4);
+	printf("\n");
+
+	ft_printf("teste %5.1dteste\n", 42);
+	printf("teste %-5.1dteste\n", 42);
+	printf("\n");
+
+	ft_printf("teste %5.2dteste\n", 4);
+	printf("teste %-5.2dteste\n", 4);
+	printf("\n");
+
+
 
 
 
