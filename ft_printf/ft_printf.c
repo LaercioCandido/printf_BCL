@@ -228,7 +228,7 @@ int ft_printf(const char *str, ...)
 int main()
 {
 	//numeros negativos
-	/*
+
 	printf("teste%1.3dteste\n", -65432);
     printf("teste%01.3dteste\n", -65432);
     printf("teste%-1.3dteste\n", -65432);
@@ -306,7 +306,7 @@ int main()
     printf("teste%-05.3dteste\n", -6);
     printf("\n");
 
-	ft_printf("teste%5.3dteste\n", -6);
+	ft_printf("teste%5.3dteste\n", -6);/*
     ft_printf("teste%05.3dteste\n", -6);
     ft_printf("teste%-5.3dteste\n", -6);
     ft_printf("teste%0-5.3dteste\n", -6);
@@ -318,19 +318,21 @@ int main()
 
 
 
+
 	//numeros positivos
+	/*
 	printf("teste%1.3dteste\n", 65432);
-    printf("teste%01.3dteste\n", 65432);
+	printf("teste%01.3dteste\n", 65432);
     printf("teste%-1.3dteste\n", 65432);
     printf("teste%0-1.3dteste\n", 65432);
     printf("teste%-01.3dteste\n", 65432);
-    printf("\n");
+	printf("1\n");
 
 	ft_printf("teste%1.3dteste\n", 65432);
-    ft_printf("teste%01.3dteste\n", 65432);
-    ft_printf("teste%-1.3dteste\n", 65432);
-    ft_printf("teste%0-1.3dteste\n", 65432);
-    ft_printf("teste%-01.3dteste\n", 65432);
+	ft_printf("teste%01.3dteste\n", 65432);
+	ft_printf("teste%-1.3dteste\n", 65432);
+	ft_printf("teste%0-1.3dteste\n", 65432);
+	ft_printf("teste%-01.3dteste\n", 65432);
     ft_printf("\n---------------------------\n");
 
     printf("teste%3.1dteste\n", 65432);
@@ -338,7 +340,7 @@ int main()
     printf("teste%-3.1dteste\n", 65432);
     printf("teste%0-3.1dteste\n", 65432);
     printf("teste%-03.1dteste\n", 65432);
-    printf("\n");
+    printf("2\n");
 
 	ft_printf("teste%3.1dteste\n", 65432);
     ft_printf("teste%03.1dteste\n", 65432);
@@ -352,7 +354,7 @@ int main()
     printf("teste%-1.5dteste\n", 654);
     printf("teste%0-1.5dteste\n", 654);
     printf("teste%-01.5dteste\n", 654);
-    printf("\n");
+    printf("3\n");
 
 	ft_printf("teste%1.5dteste\n", 654);
     ft_printf("teste%01.5dteste\n", 654);
@@ -366,7 +368,7 @@ int main()
     printf("teste%-3.5dteste\n", 6);
     printf("teste%0-3.5dteste\n", 6);
     printf("teste%-03.5dteste\n", 6);
-    printf("\n");
+    printf("4\n");
 
 	ft_printf("teste%3.5dteste\n", 6);
     ft_printf("teste%03.5dteste\n", 6);
@@ -380,7 +382,7 @@ int main()
     printf("teste%-5.1dteste\n", 65);
     printf("teste%0-5.1dteste\n", 65);
     printf("teste%-05.1dteste\n", 65);
-    printf("\n");
+    printf("5\n");
 
 	ft_printf("teste%5.1dteste\n", 65);
     ft_printf("teste%05.1dteste\n", 65);
@@ -394,7 +396,7 @@ int main()
     printf("teste%-5.3dteste\n", 6);
     printf("teste%0-5.3dteste\n", 6);
     printf("teste%-05.3dteste\n", 6);
-    printf("\n");
+    printf("6\n");
 
 	ft_printf("teste%5.3dteste\n", 6);
     ft_printf("teste%05.3dteste\n", 6);
@@ -402,7 +404,7 @@ int main()
     ft_printf("teste%0-5.3dteste\n", 6);
     ft_printf("teste%-05.3dteste\n", 6);
     ft_printf("\n");
-
+	*/
 
 
 	return (0);
