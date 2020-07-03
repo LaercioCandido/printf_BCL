@@ -6,7 +6,7 @@
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 19:23:38 by lcandido          #+#    #+#             */
-/*   Updated: 2020/06/23 19:23:38 by lcandido         ###   ########.fr       */
+/*   Updated: 2020/07/02 23:17:35 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,9 @@ int		ft_printf(const char *str, ...)
 		}
 		else
 		{
-			ft_putchar(*str);
+			count += ft_putchar(*str);
 		}
 		str++;
-		count++;
 	}
 	return (count);
 }

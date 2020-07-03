@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:11:38 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/02 23:02:31 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/02 23:04:55 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ int ft_printf_d(t_flags *flags, int number)
 			while (flags->width-- - point)
 				count += ft_putchar(' ');
 	}
-	return (0);
+	return (count);
 }
