@@ -34,7 +34,7 @@ int		ft_putnbr(int n)
 	unsigned	i;
 	int			count;
 
-	count = 0;
+	count = 1;
 	if (n < 0)
 	{
 		ft_putchar('-');
@@ -143,7 +143,7 @@ int		ft_printf(const char *str, ...)
 			printf("type = %c\n",flags.type);
 			printf("len = %d\n",flags.len);
 			*/
-			if (flags.type == 'd')
+			if (flags.type == 'd' || flags.type == 'i')
 			{
 				count += ft_printf_d(&flags, va_arg(args, int));
 			//  number = va_arg(args, int);
