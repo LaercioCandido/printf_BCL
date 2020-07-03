@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:11:38 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/02 22:55:36 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/02 23:02:31 by rcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int ft_printf_d(t_flags *flags, int number)
 	int point;
 	int count;
 
+	count = 0;
 	len = ft_numlen(number);
-
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
 		count += ft_putnbr(number);
 	else if (flags->point > len && flags->point >= flags->width)
