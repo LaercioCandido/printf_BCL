@@ -10,19 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdarg.h>
-#include <stdio.h>
-
-typedef struct s_flags{
-	int		minus;
-	int		zero;
-	int		star;
-	int		point;
-	int		width;
-	int		len;
-	char	type;
-} t_flags;
+#include "../ft_printf.h"
 
 void    init(t_flags *flags)
 {
@@ -115,39 +103,14 @@ int ft_numlen(int num)
 	int i;
 
 	i = 1;
+	if (num < 0)
+		i++;
 	while (num >= 10 || num <= -10)
 	{
 		num /= 10;
 		i++;
 	}
 	return (i);
-}
-
-int ft_printf_d(t_flags *flags, int number)
-{
-	int len;
-
-	len = ft_numlen(number);
-	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
-		ft_putnbr(number);
-	else
-	{
-		if (flags->width > flags->point && flags->point > len)
-		{
-			while (flags->width-- - flags->point)
-				ft_putchar(' ');
-			while (flags->point-- - len)
-				ft_putchar('0');
-		}
-		else if (flags->width > len && len > flags->point)
-			while (flags->width-- - len)
-				ft_putchar(' ');
-		else if (flags->point > flags->width)
-			while (flags->point-- - len)
-				ft_putchar('0');
-		ft_putnbr(number);
-	}
-	return (0);
 }
 
 int ft_printf(const char *str, ...)
@@ -191,37 +154,4 @@ int ft_printf(const char *str, ...)
 		count++;
 	}
 	return (count);
-}
-
-int main()
-{
-
-
-	ft_printf("teste %1.2d teste\n", 421);
-	printf("teste %1.2d teste\n", 421);
-	printf("\n");
-
-	ft_printf("teste %1.3d teste\n", 42);
-	printf("teste %1.3d teste\n", 42);
-	printf("\n");
-
-	ft_printf("teste %2.1d teste\n", 421);
-	printf("teste %2.1d teste\n", 421);
-	printf("\n");
-
-	ft_printf("teste %2.3dteste\n", 4);
-	printf("teste %2.3dteste\n", 4);
-		printf("\n");
-
-	ft_printf("teste %3.1dteste\n", 42);
-	printf("teste %3.1dteste\n", 42);
-	printf("\n");
-
-	ft_printf("teste %3.2dteste\n", 4);
-	printf("teste %3.2dteste\n", 4);
-	printf("\n");
-
-
-
-	return (0);
 }
