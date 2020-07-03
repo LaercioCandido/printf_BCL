@@ -23,35 +23,40 @@ void    init(t_flags *flags)
 	flags->type = '\0';
 }
 
-void	ft_putchar(char c)
+int		ft_putchar(char c)
 {
 	write(1, &c, 1);
+	return (1);
 }
 
-void	ft_putnbr(int n)
+int		ft_putnbr(int n)
 {
 	unsigned	i;
+	int			count;
 
+	count = 0;
 	if (n < 0)
 	{
 		ft_putchar('-');
 		i = n * -1;
+		count++;
 	}
 	else
 		i = n;
 	if (i >= 10)
-		ft_putnbr(i / 10);
+		count += ft_putnbr(i / 10);
 	ft_putchar(i % 10 + 48);
+	return (count);
 }
 
-int	ft_isnum(int c)
+int		ft_isnum(int c)
 {
 	if (c >= 48 && c <= 57)
 		return (1);
 	return (0);
 }
 
-void checkflag(const char f, t_flags *flags)
+void	checkflag(const char f, t_flags *flags)
 {
 	if (f == '-')
 	{
@@ -73,7 +78,7 @@ void checkflag(const char f, t_flags *flags)
 	}
 }
 
-int readflag(t_flags *flags, const char *str)
+int		readflag(t_flags *flags, const char *str)
 {
 	int i;
 
@@ -98,7 +103,7 @@ int readflag(t_flags *flags, const char *str)
 	return (i);
 }
 
-int ft_numlen(int num)
+int		ft_numlen(int num)
 {
 	int i;
 
@@ -113,7 +118,7 @@ int ft_numlen(int num)
 	return (i);
 }
 
-int ft_printf(const char *str, ...)
+int		ft_printf(const char *str, ...)
 {
 	int     count;
 	va_list args;
@@ -140,7 +145,7 @@ int ft_printf(const char *str, ...)
 			*/
 			if (flags.type == 'd')
 			{
-				ft_printf_d(&flags, va_arg(args, int));
+				count += ft_printf_d(&flags, va_arg(args, int));
 			//  number = va_arg(args, int);
 			//  ft_putnbr(number);
 				str = str + flags.len; /////

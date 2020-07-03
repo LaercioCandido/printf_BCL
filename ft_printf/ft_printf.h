@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:16:36 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/02 21:24:39 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/02 22:55:59 by rcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_flags{
 } 		t_flags;
 
 void	init(t_flags *flags);
-void	ft_putchar(char c);
-void	ft_putnbr(int n);
+int		ft_putchar(char c);
+int		ft_putnbr(int n);
 void	checkflag(const char f, t_flags *flags);
 int		readflag(t_flags *flags, const char *str);
 int		ft_numlen(int num);
