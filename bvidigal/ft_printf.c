@@ -227,6 +227,33 @@ int ft_printf_d(t_flags *flags, va_list args)
 	return (count);
 }
 
+int ft_printf_c(t_flags *flags, va_list args)
+{
+	int count;
+	char c;
+	c = va_arg(args, int);
+	count = 0;
+	if (flags->minus == 1)
+	{
+		count += ft_putchar(c);
+		while (flags->width-- > 1)
+			count += ft_putchar(' ');
+	}
+	// else if (flags->zero == 1)
+	// {
+	// 	while (flags->width-- > 1)
+	// 		count += ft_putchar('0');
+	// 	count += ft_putchar(c);
+	// }
+	else
+	{
+		while (flags->width-- > 1)
+			count += flags->zero == 1 ? ft_putchar('0') : ft_putchar(' ');
+		count += ft_putchar(c);
+	}
+	return (count);
+}
+
 int ft_printf(const char *str, ...)
 {
 	int     count;
@@ -252,9 +279,16 @@ int ft_printf(const char *str, ...)
 			printf("type = %c\n",flags.type);
 			printf("len = %d\n",flags.len);
 			*/
-			if (flags.type == 'd')
+			if (flags.type == 'd' || flags.type == 'i')
 			{
 				ft_printf_d(&flags, args);
+			//  number = va_arg(args, int);
+			//  ft_putnbr(number);
+				str = str + flags.len; /////
+			}
+			if (flags.type == 'c')
+			{
+				ft_printf_c(&flags, args);
 			//  number = va_arg(args, int);
 			//  ft_putnbr(number);
 				str = str + flags.len; /////
@@ -527,6 +561,63 @@ int main()
 	ft_printf("teste%05.2dteste\n", -1);
 	ft_printf("teste%5.2dteste\n", -1);
 	ft_printf("teste%02.5dteste\n", -1);
+	ft_printf("\n");
+
+	ft_printf("\n-----------------------------\n");
+	ft_printf("\n--------conversion c---------\n");
+	ft_printf("\n-----------------------------\n");
+	printf("teste%cteste\n", 'X');
+	printf("teste%0cteste\n", 'X');
+	printf("teste%-cteste\n", 'X');
+	printf("teste%-0cteste\n", 'X');
+	printf("teste%5cteste\n", 'X');
+	printf("teste%cteste\n", 'X');
+	printf("16\n");
+
+	ft_printf("teste%cteste\n", 'X');
+	ft_printf("teste%0cteste\n", 'X');
+	ft_printf("teste%-cteste\n", 'X');
+	ft_printf("teste%-0cteste\n", 'X');
+	ft_printf("teste%5cteste\n", 'X');
+	ft_printf("teste%cteste\n", 'X');
+	ft_printf("\n");
+
+	ft_printf("\n-----------------------------\n");
+
+
+	printf("teste%05cteste\n", 'a');
+	printf("teste%05.cteste\n", 'a');
+	printf("teste%0.5cteste\n", 'a');
+	printf("teste%05.2cteste\n", 'a');
+	printf("teste%5.2cteste\n", 'a');
+	printf("teste%02.5cteste\n", 'a');
+	printf("17\n");
+
+	ft_printf("teste%05cteste\n", 'a');
+	ft_printf("teste%05.cteste\n", 'a');
+	ft_printf("teste%0.5cteste\n", 'a');
+	ft_printf("teste%05.2cteste\n", 'a');
+	ft_printf("teste%5.2cteste\n", 'a');
+	ft_printf("teste%02.5cteste\n", 'a');
+	ft_printf("\n");
+
+	ft_printf("\n-----------------------------\n");
+
+
+	printf("teste%-05cteste\n", 'a');
+	printf("teste%-05.cteste\n", 'a');
+	printf("teste%-0.5cteste\n", 'a');
+	printf("teste%-05.2cteste\n", 'a');
+	printf("teste%-5.2cteste\n", 'a');
+	printf("teste%-03.5cteste\n", 'a');
+	printf("18\n");
+
+	ft_printf("teste%-05cteste\n", 'a');
+	ft_printf("teste%-05.cteste\n", 'a');
+	ft_printf("teste%-0.5cteste\n", 'a');
+	ft_printf("teste%-05.2cteste\n", 'a');
+	ft_printf("teste%-5.2cteste\n", 'a');
+	ft_printf("teste%-03.5cteste\n", 'a');
 	ft_printf("\n");
 
 
