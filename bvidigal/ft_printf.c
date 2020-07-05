@@ -242,13 +242,13 @@ int ft_printf_c(t_flags *flags, va_list args)
 	// else if (flags->zero == 1)
 	// {
 	// 	while (flags->width-- > 1)
-	// 		count += ft_putchar('0');
+	// 		count += ft_putchar(' ');
 	// 	count += ft_putchar(c);
 	// }
 	else
 	{
 		while (flags->width-- > 1)
-			count += flags->zero == 1 ? ft_putchar('0') : ft_putchar(' ');
+			count += ft_putchar(' ');
 		count += ft_putchar(c);
 	}
 	return (count);
@@ -585,20 +585,20 @@ int main()
 	ft_printf("\n-----------------------------\n");
 
 
-	printf("teste%05cteste\n", 'a');
-	printf("teste%05.cteste\n", 'a');
-	printf("teste%0.5cteste\n", 'a');
-	printf("teste%05.2cteste\n", 'a');
-	printf("teste%5.2cteste\n", 'a');
-	printf("teste%02.5cteste\n", 'a');
+	printf("teste%05cteste\n", 'X');
+	printf("teste%05.cteste\n", 'X');
+	printf("teste%0.5cteste\n", 'X');
+	printf("teste%05.2cteste\n", 'X');
+	printf("teste%5.2cteste\n", 'X');
+	printf("teste%02.5cteste\n", 'X');
 	printf("17\n");
 
-	ft_printf("teste%05cteste\n", 'a');
-	ft_printf("teste%05.cteste\n", 'a');
-	ft_printf("teste%0.5cteste\n", 'a');
-	ft_printf("teste%05.2cteste\n", 'a');
-	ft_printf("teste%5.2cteste\n", 'a');
-	ft_printf("teste%02.5cteste\n", 'a');
+	ft_printf("teste%05cteste\n", 'X');
+	ft_printf("teste%05.cteste\n", 'X');
+	ft_printf("teste%0.5cteste\n", 'X');
+	ft_printf("teste%05.2cteste\n", 'X');
+	ft_printf("teste%5.2cteste\n", 'X');
+	ft_printf("teste%02.5cteste\n", 'X');
 	ft_printf("\n");
 
 	ft_printf("\n-----------------------------\n");
