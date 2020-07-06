@@ -148,9 +148,9 @@ int ft_printf_d(t_flags *flags, va_list args)
 	number = va_arg(args, int);
 	len = ft_numlen(number);
 	count = 0;
-	if(flags->point == 0 && number == 0)
+	if(flags->point == 0 && number == 0) // qq isso aqui faz mesmo?
 	{
-		// ft_putchar('');
+		//ft_putchar('H');
 		return (count);
 	}
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
@@ -178,19 +178,24 @@ int ft_printf_d(t_flags *flags, va_list args)
 				flags->point++;
 				count += ft_putchar('-');
 				while (flags->width-- - len)
-					count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+					count += flags->zero ? ft_putchar('0') : ft_putchar('H'); //esse tenario nao roda else
 				count += ft_putnbr(number);
 			}
 			else if (number < 0)
 			{
 				while ((flags->point >= 0) && (flags->width-- - len))
-					count += flags->zero ? ft_putchar(' ') : ft_putchar('0');
+					count += flags->zero ? ft_putchar(' ') : ft_putchar('Y'); //esse tenario nao roda else
 				count += ft_putnbr(number);
 			}
 			else
 			{
 				while (flags->width-- - len)
-					count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+				{
+					if (!(flags->star)) //para tirar conflito
+						count += flags->point ? ft_putchar('0') : ft_putchar(' '); //esse tinha conflitos 16 e 14
+					else
+						count += ft_putchar(' '); //para tirar conflito
+				}
 				count += ft_putnbr(number);
 			}
 
@@ -209,7 +214,7 @@ int ft_printf_d(t_flags *flags, va_list args)
 		point = number < 0? flags->point + 1: flags->point;
 		if (flags->minus == 0)
 			while (flags->width-- - point)
-				count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+				count += ft_putchar(' '); //removi tenario aqui
 		if (number < 0)
 		{
 			count += ft_putchar('-');
@@ -532,14 +537,14 @@ int main()
 	ft_printf("\n-----------------------------\n");
 
 	printf("teste%05dteste\n", 1);
-	printf("teste%05.dteste\n", 1);
+	printf("teste%05.dteste\n", 2);
 	printf("teste%0.5dteste\n", 1);
 	printf("teste%05.2dteste\n", 1);
 	printf("teste%02.5dteste\n", 1);
-	printf("15\n");
+	printf("16\n");
 
 	ft_printf("teste%05dteste\n", 1);
-	ft_printf("teste%05.dteste\n", 1);
+	ft_printf("teste%05.dteste\n", 2);
 	ft_printf("teste%0.5dteste\n", 1);
 	ft_printf("teste%05.2dteste\n", 1);
 	ft_printf("teste%02.5dteste\n", 1);
@@ -553,7 +558,7 @@ int main()
 	printf("teste%05.2dteste\n", -1);
 	printf("teste%5.2dteste\n", -1);
 	printf("teste%02.5dteste\n", -1);
-	printf("15\n");
+	printf("17\n");
 
 	ft_printf("teste%05dteste\n", -1);
 	ft_printf("teste%05.dteste\n", -1);
@@ -572,7 +577,7 @@ int main()
 	printf("teste%-0cteste\n", 'X');
 	printf("teste%5cteste\n", 'X');
 	printf("teste%cteste\n", 'X');
-	printf("16\n");
+	printf("18\n");
 
 	ft_printf("teste%cteste\n", 'X');
 	ft_printf("teste%0cteste\n", 'X');
@@ -591,7 +596,7 @@ int main()
 	printf("teste%05.2cteste\n", 'X');
 	printf("teste%5.2cteste\n", 'X');
 	printf("teste%02.5cteste\n", 'X');
-	printf("17\n");
+	printf("19\n");
 
 	ft_printf("teste%05cteste\n", 'X');
 	ft_printf("teste%05.cteste\n", 'X');
@@ -610,7 +615,7 @@ int main()
 	printf("teste%-05.2cteste\n", 'a');
 	printf("teste%-5.2cteste\n", 'a');
 	printf("teste%-03.5cteste\n", 'a');
-	printf("18\n");
+	printf("20\n");
 
 	ft_printf("teste%-05cteste\n", 'a');
 	ft_printf("teste%-05.cteste\n", 'a');
