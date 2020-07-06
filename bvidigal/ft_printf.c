@@ -79,6 +79,8 @@ void checkflag(const char f, t_flags *flags)
 	if (f == '.')
 	{
 		flags->point = (flags->point == -1) ? 0 : -2;
+		// if (flags->point == 0)
+		// 	flags->point = -2;
 	}
 	if (f == '*')
 	{
@@ -126,6 +128,16 @@ int ft_numlen(int num)
 		num /= 10;
 		i++;
 	}
+	return (i);
+}
+
+int ft_strlen(char *s)
+{
+	int i;
+
+	i = 0;
+	while(s[i])
+		i++;
 	return (i);
 }
 
@@ -184,18 +196,13 @@ int ft_printf_d(t_flags *flags, va_list args)
 			else if (number < 0)
 			{
 				while ((flags->point >= 0) && (flags->width-- - len))
-					count += flags->zero ? ft_putchar(' ') : ft_putchar('Y'); //esse tenario nao roda else
+					count += flags->zero ? ft_putchar(' ') : ft_putchar('0');
 				count += ft_putnbr(number);
 			}
 			else
 			{
 				while (flags->width-- - len)
-				{
-					if (!(flags->star)) //para tirar conflito
-						count += flags->point ? ft_putchar('0') : ft_putchar(' '); //esse tinha conflitos 16 e 14
-					else
-						count += ft_putchar(' '); //para tirar conflito
-				}
+						count += flags->point == -2 ? ft_putchar('B') : ft_putchar('Q');//
 				count += ft_putnbr(number);
 			}
 
@@ -259,6 +266,37 @@ int ft_printf_c(t_flags *flags, va_list args)
 	return (count);
 }
 
+int	ft_printf_s(t_flags *flags, va_list args)
+{
+	int count;
+	char *str;
+	int len;
+
+	str = va_arg(args, char *);
+	// printf("\n%s<<<<\n", str);
+	// return (0);
+	len = ft_strlen(str);
+	count = 0;
+	if (flags->len == 0 || (flags->point == -1 && len >= flags->width) )
+		while(*str)
+			count += ft_putchar(*str++);
+	else if (flags->width > flags->point)
+	{
+		while((flags->width - count) && !(flags->minus))
+		 	count += ft_putchar('*');
+		while(flags->point--)
+		{
+			count += ft_putchar(*str++);
+		}
+		while((flags->width - count) && flags->minus)
+			 count += ft_putchar('*');
+	}
+
+
+	return (count);
+
+}
+
 int ft_printf(const char *str, ...)
 {
 	int     count;
@@ -294,6 +332,13 @@ int ft_printf(const char *str, ...)
 			if (flags.type == 'c')
 			{
 				ft_printf_c(&flags, args);
+			//  number = va_arg(args, int);
+			//  ft_putnbr(number);
+				str = str + flags.len; /////
+			}
+			if (flags.type == 's')
+			{
+				ft_printf_s(&flags, args);
 			//  number = va_arg(args, int);
 			//  ft_putnbr(number);
 				str = str + flags.len; /////
@@ -624,6 +669,49 @@ int main()
 	ft_printf("teste%-5.2cteste\n", 'a');
 	ft_printf("teste%-03.5cteste\n", 'a');
 	ft_printf("\n");
+
+
+	ft_printf("\n-----------------------------\n");
+	ft_printf("\n--------conversion s---------\n");
+	ft_printf("\n-----------------------------\n");
+	printf("1%s\n", "teste");
+	// printf("1%0s\n", "teste");
+	printf("2%-s\n", "teste");
+	// printf("1%-0s\n", "teste");
+	printf("3%4sG\n", "teste");
+	printf("3%4.4sG\n", "teste");
+	printf("3%4.sG\n", "teste");
+	printf("4%7sG\n", "teste");
+	printf("4%-7sG\n", "teste");
+	printf("5%4.3sG\n", "teste");
+	printf("5%-4.3sG\n", "teste");
+	printf("6%7.3sG\n", "teste");
+	printf("6%-7.3sG\n", "teste");
+	printf("7%7.10sG\n", "teste");
+	printf("7%-7.10sG\n", "teste");
+	//printf("8%0.5sG\n", "teste");
+	printf("9%5.0sG\n", "teste");
+	printf("9%-5.0sG\n", "teste");
+
+	// printf("%07.10s\n", "teste");
+	// printf("%-07.10s\n", "teste");
+	printf("------------18\n");
+
+	ft_printf("1%s\n", "teste");
+	// ft_printf("1%0s\n", "teste");
+	ft_printf("2%-s\n", "teste");
+	// ft_printf("1%-0s\n", "teste");
+	ft_printf("3%4sG\n", "teste");
+	ft_printf("4%5sG\n", "teste");
+	ft_printf("5%8.0sG\n", "teste");
+	ft_printf("6%8.3sG\n", "teste");
+	ft_printf("7%-8.0sG\n", "teste");
+	ft_printf("8%-8.3sG\n", "teste");
+	ft_printf("9%-8.sG\n", "teste");
+	//ft_printf("10%8sG\n", "teste");
+	ft_printf("\n");
+
+	ft_printf("\n-----------------------------\n");
 
 
 	return (0);
