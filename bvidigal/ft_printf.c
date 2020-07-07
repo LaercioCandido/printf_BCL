@@ -271,27 +271,36 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	int count;
 	char *str;
 	int len;
+	int point;
 
 	str = va_arg(args, char *);
 	// printf("\n%s<<<<\n", str);
 	// return (0);
 	len = ft_strlen(str);
 	count = 0;
+	point = flags->point > len ? len : flags->point;
 	if (flags->len == 0 || (flags->point == -1 && len >= flags->width) )
 		while(*str)
 			count += ft_putchar(*str++);
+	else if (flags->point == -1 && flags->width > len)
+	{
+		while(flags->width-- - len)
+			count += ft_putchar('Z');
+		while(*str)
+			count += ft_putchar(*str++);
+	}
 	else if (flags->width > flags->point)
 	{
-		while((flags->width - count) && !(flags->minus))
+		while((flags->width-- - point) && !(flags->minus))
 		 	count += ft_putchar('*');
-		while(flags->point--)
-		{
+		while(flags->point-- && *str)
 			count += ft_putchar(*str++);
-		}
-		while((flags->width - count) && flags->minus)
+		while((flags->width-- - point + 1) && flags->minus)
 			 count += ft_putchar('*');
 	}
-
+	else if (flags->width <= flags->point)
+		while(point-- && *str)
+			count += ft_putchar(*str++);
 
 	return (count);
 
@@ -671,30 +680,29 @@ int main()
 	ft_printf("\n");
 
 
-	ft_printf("\n-----------------------------\n");
-	ft_printf("\n--------conversion s---------\n");
-	ft_printf("\n-----------------------------\n");
+	printf("\n-----------------------------\n");
+	printf("\n--------conversion s---------\n");
+	printf("\n-----------------------------\n");
 	printf("1%s\n", "teste");
 	// printf("1%0s\n", "teste");
 	printf("2%-s\n", "teste");
 	// printf("1%-0s\n", "teste");
 	printf("3%4sG\n", "teste");
-	printf("3%4.4sG\n", "teste");
-	printf("3%4.sG\n", "teste");
 	printf("4%7sG\n", "teste");
-	printf("4%-7sG\n", "teste");
-	printf("5%4.3sG\n", "teste");
-	printf("5%-4.3sG\n", "teste");
-	printf("6%7.3sG\n", "teste");
-	printf("6%-7.3sG\n", "teste");
-	printf("7%7.10sG\n", "teste");
-	printf("7%-7.10sG\n", "teste");
-	//printf("8%0.5sG\n", "teste");
-	printf("9%5.0sG\n", "teste");
-	printf("9%-5.0sG\n", "teste");
-
-	// printf("%07.10s\n", "teste");
-	// printf("%-07.10s\n", "teste");
+	printf("5%8.0sG\n", "teste");
+	printf("6%8.3sG\n", "teste");
+	printf("7%-8.0sG\n", "teste");
+	printf("8%-8.3sG\n", "teste");
+	printf("9%-8.sG\n", "teste");
+	printf("9%8.sG\n", "teste");
+	printf("10%8sG\n", "teste");
+	printf("11%4.5sG\n", "teste");
+	printf("12%4.4sG\n", "teste");
+	printf("13%4.7sG\n", "teste");
+	printf("14%8.7sG\n", "teste");
+	printf("15%-8.7sG\n", "teste");
+	printf("16%-.7sG\n", "teste");
+	printf("17%8.5sG\n", "teste");
 	printf("------------18\n");
 
 	ft_printf("1%s\n", "teste");
@@ -702,13 +710,20 @@ int main()
 	ft_printf("2%-s\n", "teste");
 	// ft_printf("1%-0s\n", "teste");
 	ft_printf("3%4sG\n", "teste");
-	ft_printf("4%5sG\n", "teste");
+	ft_printf("4%7sG\n", "teste");
 	ft_printf("5%8.0sG\n", "teste");
 	ft_printf("6%8.3sG\n", "teste");
 	ft_printf("7%-8.0sG\n", "teste");
 	ft_printf("8%-8.3sG\n", "teste");
 	ft_printf("9%-8.sG\n", "teste");
-	//ft_printf("10%8sG\n", "teste");
+	ft_printf("10%8sG\n", "teste");
+	ft_printf("11%4.5sG\n", "teste");
+	ft_printf("12%4.4sG\n", "teste");
+	ft_printf("13%4.7sG\n", "teste");
+	ft_printf("14%8.7sG\n", "teste");
+	ft_printf("15%-8.7sG\n", "teste");
+	ft_printf("16%-.7sG\n", "teste");
+	ft_printf("17%8.5sG\n", "teste");
 	ft_printf("\n");
 
 	ft_printf("\n-----------------------------\n");
