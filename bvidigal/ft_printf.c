@@ -284,7 +284,7 @@ int	ft_printf_s(t_flags *flags, va_list args)
 			count += ft_putchar(*str++);
 	else if (flags->point == -1 && flags->width > len)
 	{
-		while(flags->width-- - len)
+		while((flags->width-- - len) && !(flags->minus))
 			count += ft_putchar(' ');
 		while(*str)
 			count += ft_putchar(*str++);
@@ -299,9 +299,12 @@ int	ft_printf_s(t_flags *flags, va_list args)
 			 count += ft_putchar(' ');
 	}
 	else if (flags->width <= flags->point)
+	{
+		while((len < flags->point--) && flags->width >= len) //novo while agora funciona(?)
+			count += ft_putchar(' ');
 		while(point-- && *str)
 			count += ft_putchar(*str++);
-
+	}
 	return (count);
 
 }
@@ -702,6 +705,8 @@ int main()
 	printf("15%-8.7sG\n", "teste");
 	printf("16%-.7sG\n", "teste");
 	printf("17%8.5sG\n", "teste");
+
+
 	printf("------------18\n");
 
 	ft_printf("1%s\n", "teste");
@@ -723,9 +728,27 @@ int main()
 	ft_printf("15%-8.7sG\n", "teste");
 	ft_printf("16%-.7sG\n", "teste");
 	ft_printf("17%8.5sG\n", "teste");
+
+
 	ft_printf("\n");
 
 	ft_printf("\n-----------------------------\n");
+	printf("27	>%-32s<\n", "abc");
+	printf("28	>%-16s<\n", "nark nark");
+	printf("42	>%7.7s%7.7s<\n", "hello", "world");
+	printf("43	>%3.7s%7.7s<\n", "hello", "world");
+	printf("44	>%7.7s%3.7s<\n", "hello", "world");
+	printf("46	>%7.3s%7.7s<\n", "hello", "world");
+	ft_printf("\n");
+	ft_printf("PFT conversion s\n");
+	ft_printf("\n");
+	ft_printf("27	>%-32s<\n", "abc");
+	ft_printf("28	>%-16s<\n", "nark nark");
+	ft_printf("42	>%7.7s%7.7s<\n", "hello", "world");
+	ft_printf("43	>%3.7s%7.7s<\n", "hello", "world");
+	ft_printf("44	>%7.7s%3.7s<\n", "hello", "world");
+	ft_printf("46	>%7.3s%7.7s<\n", "hello", "world");
+
 
 
 	return (0);
