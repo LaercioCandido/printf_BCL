@@ -6,7 +6,7 @@
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 19:23:38 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/02 23:17:35 by camilo           ###   ########.fr       */
+/*   Updated: 2020/07/08 17:09:55 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,17 +146,17 @@ int		ft_printf(const char *str, ...)
 			readflag(&flags, str);
 			if (flags.type == 'd' || flags.type == 'i')
 			{
-				ft_printf_d(&flags, args);
+				count += ft_printf_d(&flags, args);
 				str = str + flags.len;
 			}
 			if (flags.type == 'c')
 			{
-				ft_printf_c(&flags, args);
+				count += ft_printf_c(&flags, args);
 				str = str + flags.len;
 			}
 			if (flags.type == 's')
 			{
-				ft_printf_s(&flags, args);
+				count += ft_printf_s(&flags, args);
 				str = str + flags.len;
 			}
 		}
