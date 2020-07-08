@@ -118,6 +118,16 @@ int		ft_numlen(int num)
 	return (i);
 }
 
+int 	ft_strlen(char *s)
+{
+	int i;
+
+	i = 0;
+	while(s[i])
+		i++;
+	return (i);
+}
+
 int		ft_printf(const char *str, ...)
 {
 	int     count;
@@ -134,21 +144,20 @@ int		ft_printf(const char *str, ...)
 			init(&flags);
 			str++;
 			readflag(&flags, str);
-			/*
-			printf("\nminus = %d\n",flags.minus);
-			printf("point = %d\n",flags.point);
-			printf("star = %d\n",flags.star);
-			printf("width = %d\n",flags.width);
-			printf("zero = %d\n",flags.zero);
-			printf("type = %c\n",flags.type);
-			printf("len = %d\n",flags.len);
-			*/
 			if (flags.type == 'd' || flags.type == 'i')
 			{
-				count += ft_printf_d(&flags, va_arg(args, int));
-			//  number = va_arg(args, int);
-			//  ft_putnbr(number);
-				str = str + flags.len; /////
+				ft_printf_d(&flags, args);
+				str = str + flags.len;
+			}
+			if (flags.type == 'c')
+			{
+				ft_printf_c(&flags, args);
+				str = str + flags.len;
+			}
+			if (flags.type == 's')
+			{
+				ft_printf_s(&flags, args);
+				str = str + flags.len;
 			}
 		}
 		else

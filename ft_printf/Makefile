@@ -6,7 +6,7 @@
 #    By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 21:25:58 by rcamilo-          #+#    #+#              #
-#    Updated: 2020/07/02 22:07:27 by rcamilo-         ###   ########.fr        #
+#    Updated: 2020/07/08 16:42:49 by rcamilo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,5 +31,6 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
+	@rm -rf *.gch
 
 re: fclean all

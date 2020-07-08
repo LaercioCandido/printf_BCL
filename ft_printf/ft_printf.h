@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:16:36 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/02 22:55:59 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/08 16:36:47 by rcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int		ft_putnbr(int n);
 void	checkflag(const char f, t_flags *flags);
 int		readflag(t_flags *flags, const char *str);
 int		ft_numlen(int num);
-int		ft_printf_d(t_flags *flags, int number);
+int 	ft_strlen(char *s);
+int 	ft_printf_d(t_flags *flags, va_list args);
+int		ft_printf_c(t_flags *flags, va_list args);
+int		ft_printf_s(t_flags *flags, va_list args);
 int		ft_printf(const char *str, ...);
 
 #endif

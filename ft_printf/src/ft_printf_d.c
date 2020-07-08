@@ -6,20 +6,36 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:11:38 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/02 23:04:55 by camilo           ###   ########.fr       */
+/*   Updated: 2020/07/08 16:41:41 by rcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int ft_printf_d(t_flags *flags, int number)
+int ft_printf_d(t_flags *flags, va_list args)
 {
 	int len;
 	int point;
+	int	number;
 	int count;
 
-	count = 0;
+	if (flags->star == 1)
+		flags->width = va_arg(args, int);
+	else if (flags->star == 2)
+		flags->point = va_arg(args, int);
+	else if (flags->star == 3)
+	{
+		flags->width = va_arg(args, int);
+		flags->point = va_arg(args, int);
+	}
+	number = va_arg(args, int);
 	len = ft_numlen(number);
+	count = 0;
+	if(flags->point == 0 && number == 0) // qq isso aqui faz mesmo?
+	{
+		//ft_putchar('H');
+		return (count);
+	}
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
 		count += ft_putnbr(number);
 	else if (flags->point > len && flags->point >= flags->width)
@@ -36,11 +52,32 @@ int ft_printf_d(t_flags *flags, int number)
 	}
 	else if (flags->width >= len && len > flags->point)
 	{
+
 		if (flags->minus == 0)
 		{
-			while (flags->width-- - len)
-				count += ft_putchar(' ');
-			count += ft_putnbr(number);
+			if (number < 0 && flags->point == -1)
+			{
+				number = number * (-1);
+				flags->point++;
+				count += ft_putchar('-');
+				while (flags->width-- - len)
+					count += flags->zero ? ft_putchar('0') : ft_putchar('H'); //esse tenario nao roda else
+				count += ft_putnbr(number);
+			}
+			else if (number < 0)
+			{
+				while ((flags->point >= 0) && (flags->width-- - len))
+					count += flags->zero ? ft_putchar('0') : ft_putchar(' '); //removi tenario
+				count += ft_putnbr(number);
+			}
+			else
+			{
+				while (flags->width-- - len)
+						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+				count += ft_putnbr(number);
+			}
+
+
 		}
 		else
 		{
@@ -55,7 +92,7 @@ int ft_printf_d(t_flags *flags, int number)
 		point = number < 0? flags->point + 1: flags->point;
 		if (flags->minus == 0)
 			while (flags->width-- - point)
-				count += ft_putchar(' ');
+				count += ft_putchar(' '); //removi tenario aqui
 		if (number < 0)
 		{
 			count += ft_putchar('-');
