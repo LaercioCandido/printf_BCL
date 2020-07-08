@@ -266,6 +266,8 @@ int ft_printf_c(t_flags *flags, va_list args)
 	return (count);
 }
 
+int ft_printf(const char *str, ...);
+
 int	ft_printf_s(t_flags *flags, va_list args)
 {
 	int count;
@@ -273,13 +275,28 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	int len;
 	int point;
 
+	if (flags->star == 1)
+		flags->width = va_arg(args, int);
+	else if (flags->star == 2)
+		flags->point = va_arg(args, int);
+	else if (flags->star == 3)
+	{
+		flags->width = va_arg(args, int);
+		flags->point = va_arg(args, int);
+	}
 	str = va_arg(args, char *);
+
 	// printf("\n%s<<<<\n", str);
 	// return (0);
-	len = ft_strlen(str);
 	count = 0;
+	if (str == NULL && flags->point < 6 && flags->point > -1)
+		str = "";
+	else if (str == NULL)
+		str = "(null)";
+	len = ft_strlen(str);
+
 	point = flags->point > len ? len : flags->point;
-	if (flags->len == 0 || (flags->point == -1 && len >= flags->width) )
+	if (flags->len == 0 || (flags->point == -1 && len >= flags->width))
 		while(*str)
 			count += ft_putchar(*str++);
 	else if (flags->point == -1 && flags->width > len)
@@ -288,6 +305,8 @@ int	ft_printf_s(t_flags *flags, va_list args)
 			count += ft_putchar(' ');
 		while(*str)
 			count += ft_putchar(*str++);
+		while((flags->width-- - len + 1) && flags->minus)
+			count += ft_putchar(' ');
 	}
 	else if (flags->width > flags->point)
 	{
@@ -304,6 +323,8 @@ int	ft_printf_s(t_flags *flags, va_list args)
 			count += ft_putchar(' ');
 		while(point-- && *str)
 			count += ft_putchar(*str++);
+		while(flags->minus && flags->width--)
+				count += ft_putchar(' ');
 	}
 	return (count);
 
@@ -707,6 +728,7 @@ int main()
 	printf("17%8.5sG\n", "teste");
 
 
+
 	printf("------------18\n");
 
 	ft_printf("1%s\n", "teste");
@@ -739,6 +761,12 @@ int main()
 	printf("43	>%3.7s%7.7s<\n", "hello", "world");
 	printf("44	>%7.7s%3.7s<\n", "hello", "world");
 	printf("46	>%7.3s%7.7s<\n", "hello", "world");
+	char *b;
+	b = NULL;
+	printf("46	>%10.5s<\n", b);
+	printf("50	>%*.*s<\n", 10, 5, b);
+	printf("46	>%1s<\n", b);
+	//printf("46	>%s<  %d\n", b,  printf("%s", b));
 	ft_printf("\n");
 	ft_printf("PFT conversion s\n");
 	ft_printf("\n");
@@ -748,8 +776,9 @@ int main()
 	ft_printf("43	>%3.7s%7.7s<\n", "hello", "world");
 	ft_printf("44	>%7.7s%3.7s<\n", "hello", "world");
 	ft_printf("46	>%7.3s%7.7s<\n", "hello", "world");
-
-
+	ft_printf("46	>%10.5s<\n", b);
+	ft_printf("50	>%*.*s<\n", 10, 5, b);
+	ft_printf("46	>%1s<\n", b);
 
 	return (0);
 }
