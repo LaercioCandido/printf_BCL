@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 16:38:47 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/08 16:39:06 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/08 20:08:16 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	// printf("\n%s<<<<\n", str);
 	// return (0);
 	count = 0;
-	if (str == NULL && flags->point < 6 && flags->point > -1)
-		str = "";
-	else if (str == NULL)
+	if (str == NULL)
 		str = "(null)";
 	len = ft_strlen(str);
 
@@ -63,11 +61,13 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	}
 	else if (flags->width <= flags->point)
 	{
-		while((len < flags->point--) && flags->width >= len) //novo while agora funciona(?)
+		while((len < flags->point--) && flags->width >= len && len) //novo while agora funciona(?)
+			count += ft_putchar(' ');
+		while (!len && flags->width-- && !flags->minus)
 			count += ft_putchar(' ');
 		while(point-- && *str)
 			count += ft_putchar(*str++);
-		while(flags->minus && flags->width--)
+		while(flags->minus && flags->width-- && *str)
 				count += ft_putchar(' ');
 	}
 	return (count);
