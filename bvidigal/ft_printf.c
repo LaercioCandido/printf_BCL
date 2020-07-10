@@ -131,6 +131,48 @@ int ft_numlen(int num)
 	return (i);
 }
 
+void    *ft_memset(void *dest, int c, size_t len)
+{
+    if (len > 0)
+    {
+        while (len--)
+        {
+            *(unsigned char *)(dest + len) = (unsigned char)(c);
+        }
+    }
+    return (dest);
+}
+
+void    ft_bzero(void *s, size_t n)
+{
+    ft_memset(s, '\0', n);
+}
+
+int    ft_puthex(unsigned int nb)
+{
+    char hex[16];
+    int  tmp;
+    int  i;
+	int  count;
+
+    ft_bzero(hex, 16);
+    i = 0;
+    //printf("%lu\n", nb);
+    while (nb)
+    {
+        tmp = nb % 16;
+        hex[i] = (tmp + (tmp >= 10 ? ('a' - 10) : '0'));
+        nb /= 16;
+        i++;
+    }
+    while (i >= 1)
+    {
+    	i--;
+    	count += ft_putchar(hex[i]);
+    }
+	return (count);
+}
+
 int ft_strlen(char *s)
 {
 	int i;
@@ -330,6 +372,30 @@ int	ft_printf_s(t_flags *flags, va_list args)
 
 }
 
+int ft_printf_x(t_flags *flags, va_list args)
+{
+	int     count;
+	int		hex;
+
+	hex = va_arg(args, int);
+
+	if (flags->star == 1)
+		flags->width = va_arg(args, int);
+	else if (flags->star == 2)
+		flags->point = va_arg(args, int);
+	else if (flags->star == 3)
+	{
+		flags->width = va_arg(args, int);
+		flags->point = va_arg(args, int);
+	}
+	//printf("\n%d<<<hex in decimals\n", hex);
+	count = 0;
+	ft_puthex(hex);
+	count = count + ft_numlen(hex);
+	//printf("\n%d<<<count\n", count);
+	return (count);
+}
+
 int ft_printf(const char *str, ...)
 {
 	int     count;
@@ -372,6 +438,13 @@ int ft_printf(const char *str, ...)
 			if (flags.type == 's')
 			{
 				ft_printf_s(&flags, args);
+			//  number = va_arg(args, int);
+			//  ft_putnbr(number);
+				str = str + flags.len; /////
+			}
+			if (flags.type == 'x')
+			{
+				ft_printf_x(&flags, args);
 			//  number = va_arg(args, int);
 			//  ft_putnbr(number);
 				str = str + flags.len; /////
@@ -779,6 +852,28 @@ int main()
 	ft_printf("46	>%10.5s<\n", b);
 	ft_printf("50	>%*.*s<\n", 10, 5, b);
 	ft_printf("46	>%1s<\n", b);
+
+	ft_printf("\n");
+
+	ft_printf("\n-----------------------------\n");
+	ft_printf("\n--------conversion x---------\n");
+	ft_printf("\n-----------------------------\n");
+	ft_printf("\n");
+	ft_printf("%x\n", 12);
+	ft_printf("%x\n", 255);
+	ft_printf("%x\n", 123456);
+//	printf("above printf return >>%d\n", ft_printf("%x\n", 123456));
+	ft_printf("\n");
+	printf("%x\n", 12);
+	printf("%x\n", 255);
+	printf("%x\n", 123456);
+//	printf("above printf return >>%d\n", printf("%x\n", 123456));
+
+	printf("%*x\n", 1, 16);
+	ft_printf("\n");
+
+
+
 
 	return (0);
 }
