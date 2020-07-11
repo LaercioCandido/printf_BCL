@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 14:35:51 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/11 15:28:11 by camilo           ###   ########.fr       */
+/*   Updated: 2020/07/11 15:36:01 by rcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,11 @@ int		ft_printf(const char *str, ...)
 			if (flags.type == 'x' || flags.type == 'X')
 			{
 				count += ft_printf_x(&flags, args);
+				str = str + flags.len;
+			}
+			if (flags.type == 'u')
+			{
+				count += ft_printf_u(&flags, args);
 				str = str + flags.len;
 			}
 		}
