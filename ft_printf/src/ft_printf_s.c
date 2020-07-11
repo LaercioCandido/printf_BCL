@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 16:38:47 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/08 20:08:16 by camilo           ###   ########.fr       */
+/*   Updated: 2020/07/10 21:41:05 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	// return (0);
 	count = 0;
 	if (str == NULL)
-		str = "(null)";
+		str = "blabla";
 	len = ft_strlen(str);
 
 	point = flags->point > len ? len : flags->point;

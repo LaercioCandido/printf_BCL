@@ -159,6 +159,11 @@ int		ft_printf(const char *str, ...)
 				count += ft_printf_s(&flags, args);
 				str = str + flags.len;
 			}
+			if (flags.type == 'x' || flags.type == 'X')
+			{
+				count += ft_printf_s(&flags, args);
+				str = str + flags.len;
+			}
 		}
 		else
 		{

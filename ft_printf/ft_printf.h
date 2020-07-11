@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:16:36 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/08 16:36:47 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/10 21:24:16 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int 	ft_strlen(char *s);
 int 	ft_printf_d(t_flags *flags, va_list args);
 int		ft_printf_c(t_flags *flags, va_list args);
 int		ft_printf_s(t_flags *flags, va_list args);
+int		ft_printf_x(t_flags *flags, va_list args);
 int		ft_printf(const char *str, ...);
 
 #endif
