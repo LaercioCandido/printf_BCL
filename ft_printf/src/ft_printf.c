@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 14:35:51 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/11 14:38:51 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/11 15:28:11 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		readflag(t_flags *flags, const char *str)
 	int i;
 
 	i = 0;
-	while(str[i] == '-' || str[i] == '*' || str[i] == '.' || ft_isnum(str[i]))
+	while (str[i] == '-' || str[i] == '*' || str[i] == '.' || ft_isnum(str[i]))
 	{
 		checkflag(str[i], flags);
 		if (ft_isnum(str[i]))
@@ -96,7 +96,7 @@ int		readflag(t_flags *flags, const char *str)
 				i++;
 			}
 		else
-		  i++; //esse i++ dá pau?
+			i++;
 	}
 	flags->type = str[i];
 	flags->len = i;
@@ -118,7 +118,7 @@ int		ft_numlen(int num)
 	return (i);
 }
 
-int 	ft_strlen(char *s)
+int		ft_strlen(char *s)
 {
 	int i;
 
@@ -130,11 +130,11 @@ int 	ft_strlen(char *s)
 
 int		ft_printf(const char *str, ...)
 {
-	int     count;
-	va_list args;
-	t_flags flags;
+	int		count;
+	va_list	args;
+	t_flags	flags;
 
-		count = 0;
+	count = 0;
 	va_start(args, str);
 	while (*str)
 	{
@@ -172,5 +172,3 @@ int		ft_printf(const char *str, ...)
 	}
 	return (count);
 }
-
-
