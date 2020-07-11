@@ -512,7 +512,7 @@ int ft_printf(const char *str, ...)
 			//  ft_putnbr(number);
 				str = str + flags.len; /////
 			}
-			if (flags.type == 'x')
+			if (flags.type == 'x' || flags.type == 'X')
 			{
 				count += ft_printf_x(&flags, args);
 			//  number = va_arg(args, int);
@@ -959,7 +959,7 @@ int main()
 	printf("teste%*.*xteste\n", 10, 7, 255);
 	printf("teste%-4xteste\n", 255);
 	printf("teste%05xteste\n", 255);
-	printf("teste%5.16xteste\n", 255);
+	printf("teste%5.16Xteste\n", 255);
 	printf("14\n");
 
 	ft_printf("teste%*xteste\n", 2, 255);
@@ -969,7 +969,7 @@ int main()
 	ft_printf("teste%*.*xteste\n", 10, 7, 255);
 	ft_printf("teste%-4xteste\n", 255);
 	ft_printf("teste%05xteste\n", 255);
-	ft_printf("teste%5.16xteste\n", 255);
+	ft_printf("teste%5.16Xteste\n", 255);
 	ft_printf("\n");
 	printf("%10.6d<\n", 55);
 	printf("%10.6s<\n", "55");
