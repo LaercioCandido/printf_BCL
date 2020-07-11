@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:11:38 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/08 16:41:41 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/11 13:18:23 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int ft_printf_d(t_flags *flags, va_list args)
 	count = 0;
 	if(flags->point == 0 && number == 0) // qq isso aqui faz mesmo?
 	{
-		//ft_putchar('H');
+		while (flags->width--)
+			count += ft_putchar(' ');
 		return (count);
 	}
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
@@ -59,25 +60,32 @@ int ft_printf_d(t_flags *flags, va_list args)
 			{
 				number = number * (-1);
 				flags->point++;
-				count += ft_putchar('-');
-				while (flags->width-- - len)
-					count += flags->zero ? ft_putchar('0') : ft_putchar('H'); //esse tenario nao roda else
+				if (flags->zero) 
+				{ 
+					count += ft_putchar('-');
+					while (flags->width-- - len)
+						count += ft_putchar('0');
+				}else
+				{
+					while (flags->width-- - len)
+						count += ft_putchar(' ');
+					count += ft_putchar('-');
+				}
 				count += ft_putnbr(number);
 			}
 			else if (number < 0)
 			{
 				while ((flags->point >= 0) && (flags->width-- - len))
-					count += flags->zero ? ft_putchar('0') : ft_putchar(' '); //removi tenario
+					count += ft_putchar(' ');
 				count += ft_putnbr(number);
 			}
 			else
 			{
 				while (flags->width-- - len)
-						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+					count += (flags->zero
+							&& flags->point == -1) ? ft_putchar('0') : ft_putchar(' ');
 				count += ft_putnbr(number);
 			}
-
-
 		}
 		else
 		{
