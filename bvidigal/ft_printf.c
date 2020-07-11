@@ -13,6 +13,9 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+int ft_printf(const char *str, ...);
 
 typedef struct s_flags{
 	int		minus;
@@ -202,11 +205,8 @@ int ft_printf_d(t_flags *flags, va_list args)
 	number = va_arg(args, int);
 	len = ft_numlen(number);
 	count = 0;
-	if(flags->point == 0 && number == 0) // qq isso aqui faz mesmo?
-	{
-		//ft_putchar('H');
+	if(flags->point == 0 && number == 0)
 		return (count);
-	}
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
 		count += ft_putnbr(number);
 	else if (flags->point > len && flags->point >= flags->width)
@@ -372,12 +372,41 @@ int	ft_printf_s(t_flags *flags, va_list args)
 
 }
 
+int    digitcounter(unsigned int n)
+{
+    if (!(n / 16))
+        return (1);
+    else
+        return (digitcounter(n / 16) + 1);
+}
+
+char    *ft_itoa_base(unsigned int n, char type)
+{
+    char    *hexnumber;
+    int        len;
+    char    *base;
+
+
+    base = type == 'x' ? "0123456789abcdef" : "0123456789ABCDEF";
+    len = digitcounter(n);
+    if (!(hexnumber = malloc((len + 1) * sizeof(*hexnumber))))
+        return (NULL);
+    hexnumber[len] = '\0';
+    while (len--)
+    {
+        hexnumber[len] = base[n % 16];
+        n /= 16;
+    }
+    return (hexnumber);
+}
+
 int ft_printf_x(t_flags *flags, va_list args)
 {
 	int     count;
-	int		hex;
-
-	hex = va_arg(args, int);
+	int		dec;
+	int		len;
+	char 	*number;
+	int 	point;
 
 	if (flags->star == 1)
 		flags->width = va_arg(args, int);
@@ -388,11 +417,52 @@ int ft_printf_x(t_flags *flags, va_list args)
 		flags->width = va_arg(args, int);
 		flags->point = va_arg(args, int);
 	}
-	//printf("\n%d<<<hex in decimals\n", hex);
+	dec = va_arg(args, int);
+	number = ft_itoa_base(dec, flags->type);
 	count = 0;
-	ft_puthex(hex);
-	count = count + ft_numlen(hex);
-	//printf("\n%d<<<count\n", count);
+	len = ft_strlen(number);
+	if(flags->point == 0 && dec == 0)
+		return (count);
+	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
+		count += ft_printf(number);
+	else if (flags->point > len && flags->point >= flags->width)
+	{
+		while (flags->point-- - len)
+			count += ft_putchar('0');
+		count += ft_printf(number);
+	}
+	else if (flags->width >= len && len > flags->point)
+	{
+
+			if (flags->minus == 0)
+			{
+				while (flags->width-- - len)
+						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+				count += ft_printf(number);
+			}
+			else
+			{
+				count += ft_printf(number);
+				while (flags->width-- - len)
+					count += ft_putchar(' ');
+			}
+
+		}
+		else if (flags->width > flags->point && flags->point >= len)
+		{
+			point = flags->point;
+			if (flags->minus == 0)
+				while (flags->width-- - point)
+					count += ft_putchar(' ');
+
+			while (flags->point-- - len)
+				count += ft_putchar('0');
+			count += ft_printf(number);
+			if (flags->minus == 1)
+				while (flags->width-- - point)
+					count += ft_putchar(' ');
+		}
+	free(number);
 	return (count);
 }
 
@@ -444,7 +514,7 @@ int ft_printf(const char *str, ...)
 			}
 			if (flags.type == 'x')
 			{
-				ft_printf_x(&flags, args);
+				count += ft_printf_x(&flags, args);
 			//  number = va_arg(args, int);
 			//  ft_putnbr(number);
 				str = str + flags.len; /////
@@ -453,9 +523,10 @@ int ft_printf(const char *str, ...)
 		else
 		{
 			ft_putchar(*str);
+			count++;
 		}
 		str++;
-		count++;
+
 	}
 	return (count);
 }
@@ -862,14 +933,47 @@ int main()
 	ft_printf("%x\n", 12);
 	ft_printf("%x\n", 255);
 	ft_printf("%x\n", 123456);
-//	printf("above printf return >>%d\n", ft_printf("%x\n", 123456));
+	ft_printf("%x\n", -1);
+	ft_printf("%x\n", -2);
+	ft_printf("%x\n", -3);
+	//printf(">>%d\n", ft_printf("%x\n", 123456));
 	ft_printf("\n");
 	printf("%x\n", 12);
 	printf("%x\n", 255);
 	printf("%x\n", 123456);
-//	printf("above printf return >>%d\n", printf("%x\n", 123456));
+	printf("%x\n", -1);
+	printf("%x\n", -2);
+	printf("%x\n", -3);
 
-	printf("%*x\n", 1, 16);
+
+	//printf(">>%d\n", printf("%x\n", 123456));
+
+
+
+	ft_printf("\n-----------------------------\n");
+
+	printf("teste%*xteste\n", 2, 255);
+	printf("teste%*.xteste\n", 10, 255);
+	//printf("teste%0.*xteste\n", 10, 5);
+	printf("teste%*xteste\n", 10, 255);
+	printf("teste%*.*xteste\n", 10, 7, 255);
+	printf("teste%-4xteste\n", 255);
+	printf("teste%05xteste\n", 255);
+	printf("teste%5.16xteste\n", 255);
+	printf("14\n");
+
+	ft_printf("teste%*xteste\n", 2, 255);
+	ft_printf("teste%*.xteste\n", 10, 255);
+	//ft_printf("teste%0.*xteste\n", 10, 5);
+	ft_printf("teste%*xteste\n", 10, 255);
+	ft_printf("teste%*.*xteste\n", 10, 7, 255);
+	ft_printf("teste%-4xteste\n", 255);
+	ft_printf("teste%05xteste\n", 255);
+	ft_printf("teste%5.16xteste\n", 255);
+	ft_printf("\n");
+	printf("%10.6d<\n", 55);
+	printf("%10.6s<\n", "55");
+	printf("%10.6x<\n", 255);
 	ft_printf("\n");
 
 
