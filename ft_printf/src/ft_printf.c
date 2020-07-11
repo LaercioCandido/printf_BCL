@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/11 14:19:46 by camilo            #+#    #+#             */
-/*   Updated: 2020/07/11 14:30:57 by camilo           ###   ########.fr       */
+/*   Created: 2020/07/11 14:35:51 by rcamilo-          #+#    #+#             */
+/*   Updated: 2020/07/11 14:38:51 by rcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int 	ft_strlen(char *s)
 	int i;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 		i++;
 	return (i);
 }
@@ -132,7 +132,6 @@ int		ft_printf(const char *str, ...)
 {
 	int     count;
 	va_list args;
-	//int     number;
 	t_flags flags;
 
 		count = 0;
