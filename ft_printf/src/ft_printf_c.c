@@ -19,6 +19,13 @@ int ft_printf_c(t_flags *flags, va_list args)
 	c = va_arg(args, int);
 	count = 0;
 	if (flags->minus == 1)
+		count += ft_putchar(c);
+	while (flags->width-- > 1)
+		count += ft_putchar(' ');
+	if (flags->minus == 0)
+		count += ft_putchar(c);
+	/*
+	if (flags->minus == 1)
 	{
 		count += ft_putchar(c);
 		while (flags->width-- > 1)
@@ -30,5 +37,6 @@ int ft_printf_c(t_flags *flags, va_list args)
 			count += ft_putchar(' ');
 		count += ft_putchar(c);
 	}
+	*/
 	return (count);
 }

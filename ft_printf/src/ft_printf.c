@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
+#include <stdio.h>
 
 void    init(t_flags *flags)
 {
@@ -149,19 +150,24 @@ int		ft_printf(const char *str, ...)
 				count += ft_printf_d(&flags, args);
 				str = str + flags.len;
 			}
-			if (flags.type == 'c')
+			else if (flags.type == 'c')
 			{
 				count += ft_printf_c(&flags, args);
 				str = str + flags.len;
 			}
-			if (flags.type == 's')
+			else if (flags.type == 's')
 			{
 				count += ft_printf_s(&flags, args);
 				str = str + flags.len;
 			}
-			if (flags.type == 'x' || flags.type == 'X')
+			else if (flags.type == 'x' || flags.type == 'X')
 			{
-				count += ft_printf_s(&flags, args);
+				count += ft_printf_x(&flags, args);
+				str = str + flags.len;
+			}
+			else if (flags.type == 'u')
+			{
+				count += ft_printf_u(&flags, args);
 				str = str + flags.len;
 			}
 		}
