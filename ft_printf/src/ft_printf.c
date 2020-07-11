@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: camilo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/23 19:23:38 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/11 09:46:32 by camilo           ###   ########.fr       */
+/*   Created: 2020/07/11 14:19:46 by camilo            #+#    #+#             */
+/*   Updated: 2020/07/11 14:30:57 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-void    init(t_flags *flags)
+void	init(t_flags *flags)
 {
 	flags->minus = 0;
 	flags->zero = 0;
-	flags->star = 0; // 1 para largura / 2 para precisao / 3 printa valor do argumento (quando point == -2)
+	flags->star = 0;
 	flags->point = -1;
 	flags->width = 0;
 	flags->len = 0;
@@ -173,3 +173,5 @@ int		ft_printf(const char *str, ...)
 	}
 	return (count);
 }
+
+
