@@ -308,8 +308,6 @@ int ft_printf_c(t_flags *flags, va_list args)
 	return (count);
 }
 
-int ft_printf(const char *str, ...);
-
 int	ft_printf_s(t_flags *flags, va_list args)
 {
 	int count;
@@ -930,16 +928,16 @@ int main()
 	ft_printf("\n--------conversion x---------\n");
 	ft_printf("\n-----------------------------\n");
 	ft_printf("\n");
-	ft_printf("%x\n", 12);
-	ft_printf("%x\n", 255);
+	ft_printf("%x\n", 3);
+	ft_printf("%x\n", 17);
 	ft_printf("%x\n", 123456);
 	ft_printf("%x\n", -1);
 	ft_printf("%x\n", -2);
 	ft_printf("%x\n", -3);
 	//printf(">>%d\n", ft_printf("%x\n", 123456));
 	ft_printf("\n");
-	printf("%x\n", 12);
-	printf("%x\n", 255);
+	printf("%x\n", 3);
+	printf("%x\n", 17);
 	printf("%x\n", 123456);
 	printf("%x\n", -1);
 	printf("%x\n", -2);
