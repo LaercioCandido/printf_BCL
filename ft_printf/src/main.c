@@ -2,12 +2,24 @@
 #include <stdio.h>
 
 int main() {
-  printf("|%u|\n", -255);
-  printf("|%-18u|\n", -255);
-  printf("|%-18.14u|\n", -255);
+  int a = 10;
+int *b = &a;
+printf("%p\n",b);
+printf("%X\n",b);
+ft_printf("...1...\n");
+ft_printf("%p\n",b);
+ft_printf("%X\n",b);
+ft_printf("...1...\n");
+  char *p = "ab";
+  printf("|%p|\n", &p);
+  printf("|%-18p|\n", &p);
+  printf("|%18p|\n", &p);
+  //printf("|%018p|\n", &p);
   ft_printf("...1...\n");
-  ft_printf("|%u|\n", -255);
-  ft_printf("|%-18u|\n", -255);
-  ft_printf("|%-18.14u|\n", -255);
+  ft_printf("|%p|\n", &p);
+  ft_printf("|%-18p|\n", &p);
+  ft_printf("|%18p|\n", &p);
+  //ft_printf("|%018p|\n", &p);
+
   return 0;
 }

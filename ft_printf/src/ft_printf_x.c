@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
-#include <stdio.h>
 
 int		ft_putstr(char *s)
 {
@@ -28,7 +27,7 @@ int		ft_putstr(char *s)
 	}
 }
 
-int    digitcounter(unsigned int n)
+int    digitcounter(unsigned long int n)
 {
     if (!(n / 16))
         return (1);
@@ -36,14 +35,15 @@ int    digitcounter(unsigned int n)
         return (digitcounter(n / 16) + 1);
 }
 
-char    *ft_itoa_base(unsigned int n, char type)
+char    *ft_itoa_base(unsigned long int n, char type)
+//char    *ft_itoa_base(void *n, char type)
 {
     char    *hexnumber;
     int        len;
     char    *base;
 
 
-    base = type == 'x' ? "0123456789abcdef" : "0123456789ABCDEF";
+    base = type == 'X' ? "0123456789ABCDEF": "0123456789abcdef";
     len = digitcounter(n);
     if (!(hexnumber = malloc((len + 1) * sizeof(*hexnumber))))
         return (NULL);

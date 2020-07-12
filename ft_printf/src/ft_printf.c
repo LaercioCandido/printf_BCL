@@ -170,6 +170,11 @@ int		ft_printf(const char *str, ...)
 				count += ft_printf_u(&flags, args);
 				str = str + flags.len;
 			}
+			else if (flags.type == 'p')
+			{
+				count += ft_printf_p(&flags, args);
+				str = str + flags.len;
+			}
 		}
 		else
 		{
