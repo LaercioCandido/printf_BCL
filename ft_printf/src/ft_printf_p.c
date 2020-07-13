@@ -6,7 +6,7 @@
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 16:23:10 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/11 20:58:06 by lcandido         ###   ########.fr       */
+/*   Updated: 2020/07/13 20:36:28 by lcandido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,25 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	return (substring);
 }
 
+char	*ft_strdup(const char *s1)
+{
+	size_t			len;
+	char			*cpy;
+	unsigned int	i;
+
+	len = ft_strlen(s1) + 1;
+	if (!(cpy = malloc(sizeof(char) * len)))
+		return (0);
+	i = 0;
+	while (i < len)
+	{
+		cpy[i] = s1[i];
+		i++;
+	}
+	cpy[len] = '\0';
+	return (cpy);
+}
+
 int	ft_printf_p(t_flags *flags, va_list args)
 {
 	int     count;
@@ -69,51 +88,54 @@ int	ft_printf_p(t_flags *flags, va_list args)
 		flags->point = va_arg(args, int);
 	}
 	dec = va_arg(args, void *);
-	number = ft_itoa_base((unsigned long int)(dec), flags->type);
-	number = ft_strjoin("0x", number);
+	number = dec == 0 ? ft_strdup("(nil)") : ft_itoa_base((unsigned long int)(dec), flags->type);
 	count = 0;
-	len = ft_strlen(number);
+	len = 12;// ft_strlen(number);
 	if(flags->point == 0 && dec == 0)
 		return (count);
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
-		count += ft_putstr(number);
+		count += dec == 0 ? ft_putstr(number) : ft_printf("0x") + ft_putstr(number);
 	else if (flags->point > len && flags->point >= flags->width)
 	{
+		count += dec == 0 ? ft_putstr(number) : ft_printf("0x");
 		while (flags->point-- - len)
 			count += ft_putchar('0');
 		count += ft_putstr(number);
 	}
 	else if (flags->width >= len && len > flags->point)
 	{
-
-			if (flags->minus == 0)
-			{
-				while (flags->width-- - len)
-						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
-				count += ft_putstr(number);
-			}
-			else
-			{
-				count += ft_putstr(number);
-				while (flags->width-- - len)
-					count += ft_putchar(' ');
-			}
-
-		}
-		else if (flags->width > flags->point && flags->point >= len)
+		len = len + 2;
+		if (flags->minus == 0)
 		{
-			point = flags->point;
-			if (flags->minus == 0)
-				while (flags->width-- - point)
-					count += ft_putchar(' ');
+			//count += flags->zero ? ft_printf("0x") : 0;
 
-			while (flags->point-- - len)
-				count += ft_putchar('0');
-			count += ft_putstr(number);
-			if (flags->minus == 1)
-				while (flags->width-- - point)
+			while (flags->width-- - len)
+					//count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
 					count += ft_putchar(' ');
+			count += dec == 0 ? ft_putstr(number) : ft_printf("0x") + ft_putstr(number);
 		}
+		else
+		{
+			count += dec == 0 ? ft_putstr(number) :  ft_printf("0x") + ft_putstr(number);
+			while (flags->width-- - len)
+				count += ft_putchar(' ');
+		}
+	}
+	else if (flags->width > flags->point && flags->point >= len)
+	{
+		point = dec == 0 ? flags->point : flags->point + 2;
+		if (flags->minus == 0)
+			while (flags->width-- - point)
+				count += ft_putchar(' ');
+		if (dec != 0)
+			count += ft_printf("0x");
+		while (flags->point-- - len  && flags->minus == 0)
+			count += dec == 0? ft_putchar(' ') : ft_putchar('0');
+		count += ft_putstr(number);
+		if (flags->minus == 1)
+			while (flags->width-- - point + len + 5)
+				count += ft_putchar(' ');
+	}
 	free(number);
 	return (count);
 }
