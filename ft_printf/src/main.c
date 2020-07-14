@@ -57,7 +57,7 @@ printf("|%05.7%| -> |0000%|\n");
 printf("|%-5.7%| -> |%    |\n");
 ft_printf("...3...\n");
 */
-
+/*
 ft_printf("|%%|\n");
 ft_printf("|%2%|\n");
 ft_printf("|%5%|\n");
@@ -70,6 +70,15 @@ ft_printf("|%5.7%|\n");
 ft_printf("|%05.7%|\n");
 ft_printf("|%-5.7%|\n");
 
-
+ft_printf("%x\n", 4294967295u);
+ft_printf("%%d 0000042 == |%d|\n", 0000042);
+ft_printf("%%d Lydie == |%d|\n", 'L'+'y'+'d'+'i'+'e');
+ft_printf("%%04.5i 42 == |%04.5i|\n", 42);
+ft_printf("%%-5d -42 == |%-5d|\n", -42);
+ft_printf("%x\n", 4294967295u);
+*/
+printf("|%0*i|\n", -7, -54);
+ft_printf("|%0*i|\n", -7, -54);
+ft_printf("%-*.*s", -7, -3, "yolo");
   return 0;
 }

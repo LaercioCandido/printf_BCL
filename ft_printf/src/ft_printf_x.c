@@ -74,7 +74,7 @@ int ft_printf_x(t_flags *flags, va_list args)
 		flags->point = va_arg(args, int);
 	}
 	dec = va_arg(args, int);
-	number = ft_itoa_base(dec, flags->type);
+	number = ft_itoa_base((unsigned int)dec, flags->type);
 	count = 0;
 	len = ft_strlen(number);
 	if(flags->point == 0 && dec == 0)
