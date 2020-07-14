@@ -119,7 +119,7 @@ int		ft_numlen(int num)
 	return (i);
 }
 
-int 	ft_strlen(char *s)
+int 	ft_strlen(const char *s)
 {
 	int i;
 
@@ -173,6 +173,11 @@ int		ft_printf(const char *str, ...)
 			else if (flags.type == 'p')
 			{
 				count += ft_printf_p(&flags, args);
+				str = str + flags.len;
+			}
+			else if (flags.type == '%')
+			{
+				count += ft_printf_pct(&flags);
 				str = str + flags.len;
 			}
 		}
