@@ -186,6 +186,19 @@ int ft_strlen(char *s)
 	return (i);
 }
 
+void ft_printf_star(t_flags *flags, va_list args)
+{
+    if (flags->star == 1)
+		flags->width = va_arg(args, int);
+	else if (flags->star == 2)
+		flags->point = va_arg(args, int);
+	else if (flags->star == 3)
+    {
+		flags->width = va_arg(args, int);
+		flags->point = va_arg(args, int);
+	}
+}
+
 int ft_printf_d(t_flags *flags, va_list args)
 {
 	int len;
@@ -193,15 +206,7 @@ int ft_printf_d(t_flags *flags, va_list args)
 	int	number;
 	int count;
 
-	if (flags->star == 1)
-		flags->width = va_arg(args, int);
-	else if (flags->star == 2)
-		flags->point = va_arg(args, int);
-	else if (flags->star == 3)
-	{
-		flags->width = va_arg(args, int);
-		flags->point = va_arg(args, int);
-	}
+	ft_printf_star(flags, args);
 	number = va_arg(args, int);
 	len = ft_numlen(number);
 	count = 0;
@@ -281,30 +286,44 @@ int ft_printf_d(t_flags *flags, va_list args)
 	return (count);
 }
 
+
+int ft_printf_flags(t_flags *flags, va_list args)
+{
+    int count;
+    char c;
+
+	c = va_arg(args, int);
+    count = 0;
+    while (flags->width-- > 1)
+        count += ft_putchar(' ');
+    count += ft_putchar(c);
+    return (count);
+}
+
+
+int ft_printf_minus(t_flags *flags, va_list args)
+{
+    int count;
+    char c;
+
+    c = va_arg(args, int);
+    count = 0;
+    count += ft_putchar(c);
+    while (flags->width-- > 1)
+        count += ft_putchar(' ');
+    return (count);
+}
+
 int ft_printf_c(t_flags *flags, va_list args)
 {
 	int count;
-	char c;
-	c = va_arg(args, int);
+	// char c;
+	// c = va_arg(args, int);
 	count = 0;
 	if (flags->minus == 1)
-	{
-		count += ft_putchar(c);
-		while (flags->width-- > 1)
-			count += ft_putchar(' ');
-	}
-	// else if (flags->zero == 1)
-	// {
-	// 	while (flags->width-- > 1)
-	// 		count += ft_putchar(' ');
-	// 	count += ft_putchar(c);
-	// }
+		count += ft_printf_minus(flags, args);
 	else
-	{
-		while (flags->width-- > 1)
-			count += ft_putchar(' ');
-		count += ft_putchar(c);
-	}
+		count += ft_printf_flags(flags, args);
 	return (count);
 }
 
@@ -315,15 +334,7 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	int len;
 	int point;
 
-	if (flags->star == 1)
-		flags->width = va_arg(args, int);
-	else if (flags->star == 2)
-		flags->point = va_arg(args, int);
-	else if (flags->star == 3)
-	{
-		flags->width = va_arg(args, int);
-		flags->point = va_arg(args, int);
-	}
+	ft_printf_star(flags, args);
 	str = va_arg(args, char *);
 
 	// printf("\n%s<<<<\n", str);
@@ -406,15 +417,7 @@ int ft_printf_x(t_flags *flags, va_list args)
 	char 	*number;
 	int 	point;
 
-	if (flags->star == 1)
-		flags->width = va_arg(args, int);
-	else if (flags->star == 2)
-		flags->point = va_arg(args, int);
-	else if (flags->star == 3)
-	{
-		flags->width = va_arg(args, int);
-		flags->point = va_arg(args, int);
-	}
+	ft_printf_star(flags, args);
 	dec = va_arg(args, int);
 	number = ft_itoa_base(dec, flags->type);
 	count = 0;
@@ -446,20 +449,20 @@ int ft_printf_x(t_flags *flags, va_list args)
 			}
 
 		}
-		else if (flags->width > flags->point && flags->point >= len)
-		{
-			point = flags->point;
-			if (flags->minus == 0)
-				while (flags->width-- - point)
-					count += ft_putchar(' ');
+	else if (flags->width > flags->point && flags->point >= len)
+	{
+		point = flags->point;
+		if (flags->minus == 0)
+			while (flags->width-- - point)
+				count += ft_putchar(' ');
 
-			while (flags->point-- - len)
-				count += ft_putchar('0');
-			count += ft_printf(number);
-			if (flags->minus == 1)
-				while (flags->width-- - point)
-					count += ft_putchar(' ');
-		}
+		while (flags->point-- - len)
+			count += ft_putchar('0');
+		count += ft_printf(number);
+		if (flags->minus == 1)
+			while (flags->width-- - point)
+				count += ft_putchar(' ');
+	}
 	free(number);
 	return (count);
 }

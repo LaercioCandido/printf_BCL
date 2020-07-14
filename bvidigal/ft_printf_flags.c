@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isconversion.c                                  :+:      :+:    :+:   */
+/*   ft_printf_flags.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bvidigal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,23 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isconversion(t_flags *flags, va_list args)
+void ft_printf_star(t_flags *flags, va_list args)
+{
+    if (flags->star == 1)
+		flags->width = va_arg(args, int);
+	else if (flags->star == 2)
+		flags->point = va_arg(args, int);
+	else if (flags->star == 3)
+    {
+		flags->width = va_arg(args, int);
+		flags->point = va_arg(args, int);
+	}
+}
+
+int ft_printf_flags(t_flags *flags, va_list args)
 {
     int count;
+    char c;
 
+	c = va_arg(args, int);
     count = 0;
-    if (flags->type == 'c' || flags->type == 's' || flags->type == 'd'
-        || flags->type == 'i' || flags->type == 'i' || flags->type == 'x'
-         || flags->type == 'X' || flags->type == 'p' || flags->type == 'u')
-    {
-        if (flags->type == 'd' || flags->type == 'i')
-            count += ft_printf_d(flags, args);
-        if (flags->type == 'x' || flags->type == 'X')
-            count += ft_printf_x(flags, args);
-        if (flags->type == 'c' || flags->type == 's')
-            count += flags->type == 'c' ? ft_printf_c(flags, args) : ft_printf_s(flags, args);
-        // if (flags->type == 'p')
-        //     count += ft_printf_p(&flags, args);
-    }
+    while (flags->width-- > 1)
+        count += ft_putchar(' ');
+    count += ft_putchar(c);
+    return (count);
+}
+
+
+int ft_printf_minus(t_flags *flags, va_list args)
+{
+    int count;
+    char c;
+
+    c = va_arg(args, int);
+    count = 0;
+    count += ft_putchar(c);
+    while (flags->width-- > 1)
+        count += ft_putchar(' ');
     return (count);
 }
