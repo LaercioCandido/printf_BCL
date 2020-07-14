@@ -1,50 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_x.c                                      :+:      :+:    :+:   */
+/*   ft_printf_p.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 16:38:47 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/14 01:55:02 by camilo           ###   ########.fr       */
+/*   Updated: 2020/07/14 01:56:29 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int		digitcounter(unsigned long int n)
-{
-	if (!(n / 16))
-		return (1);
-	else
-		return (digitcounter(n / 16) + 1);
-}
-
-char	*ft_itoa_base(unsigned long int n, char type)
-{
-	char	*hexnumber;
-	int		len;
-	char	*base;
-
-	base = type == 'x' ? "0123456789abcdef" : "0123456789ABCDEF";
-	len = digitcounter(n);
-	if (!(hexnumber = malloc((len + 1) * sizeof(*hexnumber))))
-		return (NULL);
-	hexnumber[len] = '\0';
-	while (len--)
-	{
-		hexnumber[len] = base[n % 16];
-		n /= 16;
-	}
-	return (hexnumber);
-}
-
-int		ft_printf_x(t_flags *flags, va_list args)
+int		ft_printf_p(t_flags *flags, va_list args)
 {
 	int		count;
-	int		dec;
+	unsigned long int		end_dec;
 	int		len;
-	char	*number;
+	char	*end_hex;
 	int		point;
 
 	if (flags->star == 1)
@@ -56,37 +29,40 @@ int		ft_printf_x(t_flags *flags, va_list args)
 		flags->width = va_arg(args, int);
 		flags->point = va_arg(args, int);
 	}
-	dec = va_arg(args, int);
-	number = ft_itoa_base(dec, flags->type);
+	end_dec = va_arg(args, unsigned long int);
+	end_hex = ft_itoa_base(end_dec, 'x');
 	count = 0;
-	len = ft_strlen(number);
-	if (flags->point == 0 && dec == 0)
+	len = ft_strlen(end_hex);
+	if (flags->point == 0 && end_dec == 0)
 	{
-		while (flags->width--)
-			count += ft_putchar(' ');
+		while (flags->width-- - 2 > 0)
+			count +=  ft_putchar(' ');
+		count += ft_printf("0x");
 		return (count);
 	}
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
-		count += ft_printf(number);
+		count += ft_printf("0x%s", end_hex);
 	else if (flags->point > len && flags->point >= flags->width)
 	{
+		count = ft_printf("0x");
 		while (flags->point-- - len)
 			count += ft_putchar('0');
-		count += ft_printf(number);
+		count += ft_printf(end_hex);
 	}
 	else if (flags->width >= len && len > flags->point)
 	{
+		len = len + 2;
 		if (flags->minus == 0)
 		{
-			while (flags->width-- - len)
+			while (flags->width-- - len > 0)
 				count += (flags->zero && flags->point == -1)
 					? ft_putchar('0') : ft_putchar(' ');
-			count += ft_printf(number);
+			count += ft_printf("0x%s", end_hex);
 		}
 		else
 		{
-			count += ft_printf(number);
-			while (flags->width-- - len)
+			count += ft_printf("0x%s", end_hex);
+			while (flags->width-- - len > 0)
 				count += ft_putchar(' ');
 		}
 	}
@@ -96,13 +72,14 @@ int		ft_printf_x(t_flags *flags, va_list args)
 		if (flags->minus == 0)
 			while (flags->width-- - point)
 				count += ft_putchar(' ');
+		count += ft_printf("0x");
 		while (flags->point-- - len)
 			count += ft_putchar('0');
-		count += ft_printf(number);
+		count += ft_printf(end_hex);
 		if (flags->minus == 1)
 			while (flags->width-- - point)
 				count += ft_putchar(' ');
 	}
-	free(number);
+	free(end_hex);
 	return (count);
 }
