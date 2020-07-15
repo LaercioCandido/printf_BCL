@@ -79,6 +79,15 @@ ft_printf("%x\n", 4294967295u);
 */
 printf("|%0*i|\n", -7, -54);
 ft_printf("|%0*i|\n", -7, -54);
-ft_printf("%-*.*s", -7, -3, "yolo");
+ft_printf("|%-*.*s|\n", -7, -3, "yolo");
+ft_printf("|%*.*s|\n", 7, -3, "yolo");
+//printf("|%*.*s|\n", 7, -3, "yolo");
+ft_printf("|%-*s|\n", -32, "abc");
+ft_printf("|%*s|\n", -32, "abc");
+ft_printf("|%*.*i|\n", -14, -3, 94827);
+ft_printf("|%0*i|\n", -7, -54);
+
+
+
   return 0;
 }

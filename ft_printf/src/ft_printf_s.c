@@ -20,23 +20,25 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	int		point;
 
 	if (flags->star == 1)
-		if ((flags->width = va_arg(args, int)) < 0)
-		{
-			flags->width = flags->width * -1;
-			flags->minus = 1;
-		}
+		flags->width = va_arg(args, int);
 	else if (flags->star == 2)
-			flags->point = (flags->point = va_arg(args, int)) < 0 ? flags->point * -1 : flags->point;
+		flags->point = va_arg(args, int);
 	else if (flags->star == 3)
 	{
-		if ((flags->width = va_arg(args, int)) < 0)
-		{
-			flags->width = flags->width *  (-1);
-			flags->minus = 1;
-		}
-		flags->point = (flags->point = va_arg(args, int)) < 0 ? flags->point * -1 : flags->point;
+		flags->width = va_arg(args, int);
+		flags->point = va_arg(args, int);
 	}
+	if (flags->width < 0)
+	{
+		flags->width = flags->width * -1;
+		flags->minus = 1;
+	}
+	if (flags->point < 0)
+		flags->point = -1;
 	str = va_arg(args, char *);
+	//printf("width: %d\n", flags->width);
+	//printf("point: %d\n", flags->point);
+	//printf("string: %s\n", str);
 	count = 0;
 	if (str == NULL)
 		str = "(null)";

@@ -20,22 +20,21 @@ int ft_printf_d(t_flags *flags, va_list args)
 	int count;
 
 	if (flags->star == 1)
-		if ((flags->width = va_arg(args, int)) < 0)
-		{
-			flags->width = flags->width * -1;
-			flags->minus = 1;
-		}
+		flags->width = va_arg(args, int);
 	else if (flags->star == 2)
 		flags->point = va_arg(args, int);
 	else if (flags->star == 3)
 	{
-		if ((flags->width = va_arg(args, int)) < 0)
-		{
-			flags->width = flags->width *  (-1);
-			flags->minus = 1;
-		}
+		flags->width = va_arg(args, int);
 		flags->point = va_arg(args, int);
 	}
+	if (flags->width < 0)
+	{
+		flags->width = flags->width * -1;
+		flags->minus = 1;
+	}
+	if (flags->point < 0)
+		flags->point = -1;
 	number = va_arg(args, int);
 	len = ft_numlen(number);
 	count = 0;
