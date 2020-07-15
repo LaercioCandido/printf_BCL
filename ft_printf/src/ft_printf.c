@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 14:35:51 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/11 15:36:01 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/15 19:19:13 by rcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,24 +148,34 @@ int		ft_printf(const char *str, ...)
 				count += ft_printf_d(&flags, args);
 				str = str + flags.len;
 			}
-			if (flags.type == 'c')
+			else if (flags.type == 'c')
 			{
 				count += ft_printf_c(&flags, args);
 				str = str + flags.len;
 			}
-			if (flags.type == 's')
+			else if (flags.type == 's')
 			{
 				count += ft_printf_s(&flags, args);
 				str = str + flags.len;
 			}
-			if (flags.type == 'x' || flags.type == 'X')
+			else if (flags.type == 'x' || flags.type == 'X')
 			{
 				count += ft_printf_x(&flags, args);
 				str = str + flags.len;
 			}
-			if (flags.type == 'u')
+			else if (flags.type == 'u')
 			{
 				count += ft_printf_u(&flags, args);
+				str = str + flags.len;
+			}
+			else if (flags.type == 'p')
+			{
+				count += ft_printf_p(&flags, args);
+				str = str + flags.len;
+			}
+			else if (flags.type == '%')
+			{
+				count += ft_printf_pct(&flags);
 				str = str + flags.len;
 			}
 		}

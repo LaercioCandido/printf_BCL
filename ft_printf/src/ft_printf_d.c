@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:11:38 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/11 14:12:48 by camilo           ###   ########.fr       */
+/*   Updated: 2020/07/15 19:28:51 by rcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ int	ft_printf_d(t_flags *flags, va_list args)
 		flags->width = va_arg(args, int);
 		flags->point = va_arg(args, int);
 	}
+	if (flags->width < 0)
+	{
+		flags->width = flags->width * -1;
+		flags->minus = 1;
+	}
+	if (flags->point < 0)
+		flags->point = -1;
 	number = va_arg(args, int);
 	len = ft_numlen(number);
 	count = 0;
