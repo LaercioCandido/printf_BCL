@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_s.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: camilo <camilo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 16:38:47 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/15 19:27:58 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/15 22:49:43 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,13 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	}
 	else if (flags->width <= flags->point)
 	{
-		while ((len < flags->point--) && flags->width >= len && len)
+
+
+		//while (flags->width-- > len && len)
+
+		while ((flags->point-- > len) && flags->width-- > len)
 			count += ft_putchar(' ');
-		while (!len && flags->width-- && !flags->minus)
+		while (!len && flags->width-- > 0 && !flags->minus)
 			count += ft_putchar(' ');
 		while (point-- && *str)
 			count += ft_putchar(*str++);
