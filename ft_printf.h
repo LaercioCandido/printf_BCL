@@ -57,6 +57,9 @@ int 	ft_isconversion(t_flags *flags, va_list args);
 int 	ft_printf_xa(int n, int len, char c, char * num);
 int		ft_printf_xb(t_flags *flags, int len, char * num);
 int 	ft_printf_xc(t_flags *flags, int len, char * num);
+int		ft_printf_dm(t_flags *flags);
+int 	ft_printf_da(int n, int len, char c, int num);
+
 //static size_t	nbstrlen(const char *str);
 
 
