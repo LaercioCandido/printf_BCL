@@ -44,3 +44,15 @@ int ft_printf_db(t_flags *flags, int len, int num)
     count += ft_putnbr(num);
     return (count);
 }
+
+// int  ft_printf_dc(t_flags *flags, int len, int num)
+// {
+//
+//     if (num < 0)
+//     {
+//         num = num * (-1);
+//         flags->point++;
+//         count += ft_putchar('-');
+//     }
+//     count += ft_printf_da(flags->point, len, '0', number);
+// }

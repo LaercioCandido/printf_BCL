@@ -34,11 +34,9 @@ int ft_printf_d(t_flags *flags, va_list args)
 			number = number * (-1);
 			flags->point++;
 			count += ft_putchar('-');
+
 		}
 		count += ft_printf_da(flags->point, len, '0', number);
-		// while (flags->point-- - len)
-		// 	count += ft_putchar('0');
-		// count += ft_putnbr(number);
 	}
 	else if (flags->width >= len && len > flags->point)
 	{
@@ -49,28 +47,13 @@ int ft_printf_d(t_flags *flags, va_list args)
 			{
 				if (flags->zero)
 					number = number * (-1);
-				// flags->point++;
-				// count += ft_putchar('-');
 				count += ft_printf_dm(flags);
-				// while (flags->width-- - len)
-				// 	count += flags->zero ? ft_putchar('0') : ft_putchar(' '); //esse tenario rodam sim carai
-				// count += ft_putnbr(number);
 				count += ft_printf_db(flags, len, number);
 			}
 			else if (number < 0)
-			{
-				// while (flags->width-- - len)
-				// 	count += flags->zero ? ft_putchar('0') : ft_putchar(' '); //esse tenario rodam sim carai
-				// count += ft_putnbr(number);
 				count += ft_printf_db(flags, len, number);
-			}
 			else
-			{
-				// while (flags->width-- - len)
-				// 		count += flags->zero ? ft_putchar('0') : ft_putchar(' ');//esse tenario rodam sim carai
-				// count += ft_putnbr(number);
 				count += ft_printf_db(flags, len, number);
-			}
 		}
 		else
 		{
@@ -93,10 +76,6 @@ int ft_printf_d(t_flags *flags, va_list args)
 			len--;
 		}
 		count += ft_printf_da(flags->point, len, '0', number);
-
-		// while (flags->point-- - len)
-		// 	count += ft_putchar('0');
-		// count += ft_putnbr(number);
 		if (flags->minus == 1)
 			while (flags->width-- - point)
 				count += ft_putchar(' ');
