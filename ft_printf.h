@@ -59,6 +59,8 @@ int		ft_printf_xb(t_flags *flags, int len, char * num);
 int 	ft_printf_xc(t_flags *flags, int len, char * num);
 int		ft_printf_dm(t_flags *flags);
 int 	ft_printf_da(int n, int len, char c, int num);
+int 	ft_printf_db(t_flags *flags, int len, int num);
+
 
 //static size_t	nbstrlen(const char *str);
 

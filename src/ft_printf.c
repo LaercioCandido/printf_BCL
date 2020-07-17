@@ -86,7 +86,7 @@ int		ft_printf(const char *str, ...)
 			init(&flags);
 			str++;
 			readflag(&flags, str);
-			if (ft_isconversion(&flags, args))
+			if ((count += ft_isconversion(&flags, args)))
 				str = str + flags.len;
 		}
 		else

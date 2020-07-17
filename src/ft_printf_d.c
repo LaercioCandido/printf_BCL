@@ -23,7 +23,7 @@ int ft_printf_d(t_flags *flags, va_list args)
 	number = va_arg(args, int);
 	len = ft_numlen(number);
 	count = 0;
-	if(flags->point == 0 && number == 0) // qq isso aqui faz mesmo?
+	if(flags->point == 0 && number == 0)
 		return (count);
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
 		count += ft_putnbr(number);
@@ -47,25 +47,29 @@ int ft_printf_d(t_flags *flags, va_list args)
 		{
 			if (number < 0 && flags->point == -1)
 			{
-				number = number * (-1);
+				if (flags->zero)
+					number = number * (-1);
 				// flags->point++;
 				// count += ft_putchar('-');
 				count += ft_printf_dm(flags);
-				while (flags->width-- - len)
-					count += flags->zero ? ft_putchar('0') : ft_putchar('H'); //esse tenario nao roda else
-				count += ft_putnbr(number);
+				// while (flags->width-- - len)
+				// 	count += flags->zero ? ft_putchar('0') : ft_putchar(' '); //esse tenario rodam sim carai
+				// count += ft_putnbr(number);
+				count += ft_printf_db(flags, len, number);
 			}
 			else if (number < 0)
 			{
-				while ((flags->point >= 0) && (flags->width-- - len))
-					count += flags->zero ? ft_putchar('0') : ft_putchar(' '); //removi tenario
-				count += ft_putnbr(number);
+				// while (flags->width-- - len)
+				// 	count += flags->zero ? ft_putchar('0') : ft_putchar(' '); //esse tenario rodam sim carai
+				// count += ft_putnbr(number);
+				count += ft_printf_db(flags, len, number);
 			}
 			else
 			{
-				while (flags->width-- - len)
-						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
-				count += ft_putnbr(number);
+				// while (flags->width-- - len)
+				// 		count += flags->zero ? ft_putchar('0') : ft_putchar(' ');//esse tenario rodam sim carai
+				// count += ft_putnbr(number);
+				count += ft_printf_db(flags, len, number);
 			}
 		}
 		else

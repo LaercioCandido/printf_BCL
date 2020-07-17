@@ -60,6 +60,8 @@ printf("20teste%.dteste\n", 1);
 printf("21teste%05dteste\n", 1);
 printf("22teste%05dteste\n", -1);
 printf("23teste%5.2dteste\n", -1);
+printf("24teste%05dteste\n", -12);
+printf("25teste%5dteste\n", -12);
 ft_printf("---------------------------\n");
 ft_printf("00teste%1.3dteste\n", 65432);
 ft_printf("01teste%-1.3dteste\n", 65432);
@@ -85,6 +87,9 @@ ft_printf("20teste%.dteste\n", 1);
 ft_printf("21teste%05dteste\n", 1);
 ft_printf("22teste%05dteste\n", -1);
 ft_printf("23teste%5.2dteste\n", -1);
+ft_printf("24teste%05dteste\n", -12);
+ft_printf("25teste%5dteste\n", -12);
+
 ft_printf("\n-----------------------------\n");
 ft_printf("\n--------conversion c---------\n");
 ft_printf("\n-----------------------------\n");
