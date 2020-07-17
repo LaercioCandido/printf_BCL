@@ -20,24 +20,7 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	int		len;
 	int		point;
 
-	if (flags->star == 1)
-        flags->width = va_arg(args, int);
-    else if (flags->star == 2)
-        flags->point = va_arg(args, int);
-    else if (flags->star == 3)
-    {
-        flags->width = va_arg(args, int);
-        flags->point = va_arg(args, int);
-    }
-    if (flags->width < 0)
-    {
-        flags->width = flags->width * -1;
-        flags->minus = 1;
-    }
-    if (flags->point < 0)
-	{
-        flags->point = -1;
-	}
+	ft_printf_star(flags, args);
 	str = va_arg(args, char *);
 	count = 0;
 	if (str == NULL)
@@ -58,8 +41,6 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	}
 	else if (flags->width > flags->point)
 	{
-		// printf("\nfpoint = %d\n", flags->point);
-		// printf("\npoint = %d\n", point);
 		while ((flags->width-- - point) && !(flags->minus))
 			count += ft_putchar(' ');
 		while (flags->point-- && *str)
@@ -69,9 +50,13 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	}
 	else if (flags->width <= flags->point)
 	{
-		while (flags->width-- > len) //mexi nesse aqui
+
+
+		//while (flags->width-- > len && len)
+
+		while ((flags->point-- > len) && flags->width-- > len)
 			count += ft_putchar(' ');
-		while (!len && flags->width-- && !flags->minus)
+		while (!len && flags->width-- > 0 && !flags->minus)
 			count += ft_putchar(' ');
 		while (point-- && *str)
 			count += ft_putchar(*str++);

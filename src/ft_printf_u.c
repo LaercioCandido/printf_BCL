@@ -59,15 +59,7 @@ int ft_printf_u(t_flags *flags, va_list args)
 	unsigned int 	number;
 	int 	point;
 
-	if (flags->star == 1)
-		flags->width = va_arg(args, int);
-	else if (flags->star == 2)
-		flags->point = va_arg(args, int);
-	else if (flags->star == 3)
-	{
-		flags->width = va_arg(args, int);
-		flags->point = va_arg(args, int);
-	}
+	ft_printf_star(flags, args);
 	number = va_arg(args, unsigned int);
 	count = 0;
 	len = ft_numlen_unsigned(number);

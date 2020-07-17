@@ -19,33 +19,12 @@ int ft_printf_d(t_flags *flags, va_list args)
 	int	number;
 	int count;
 
-	if (flags->star == 1)
-		flags->width = va_arg(args, int);
-	else if (flags->star == 2)
-		flags->point = va_arg(args, int);
-	else if (flags->star == 3)
-	{
-		flags->width = va_arg(args, int);
-		flags->point = va_arg(args, int);
-	}
-	if (flags->width < 0)
-	{
-		flags->width = flags->width * -1;
-		flags->minus = 1;
-	}
-	if (flags->point < 0)
-	{
-		flags->point = -1;
-		flags->minus = 1;
-	}
+	ft_printf_star(flags, args);
 	number = va_arg(args, int);
 	len = ft_numlen(number);
 	count = 0;
 	if(flags->point == 0 && number == 0) // qq isso aqui faz mesmo?
-	{
-		//ft_putchar('H');
 		return (count);
-	}
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
 		count += ft_putnbr(number);
 	else if (flags->point > len && flags->point >= flags->width)

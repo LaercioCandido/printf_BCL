@@ -78,22 +78,7 @@ int	ft_printf_p(t_flags *flags, va_list args)
 	void 	*number;
 	int 	point;
 
-	if (flags->star == 1)
-	        flags->width = va_arg(args, int);
-	    else if (flags->star == 2)
-	        flags->point = va_arg(args, int);
-	    else if (flags->star == 3)
-	    {
-	        flags->width = va_arg(args, int);
-	        flags->point = va_arg(args, int);
-	    }
-	if (flags->width < 0)
-	{
-		flags->width = flags->width * -1;
-		flags->minus = 1;
-   	}
-	if (flags->point < 0)
-       flags->point = -1;
+	ft_printf_star(flags, args);
 	dec = va_arg(args, void *);
 	number = dec == 0 ? ft_strdup("(nil)") : ft_itoa_base((unsigned long int)(dec), flags->type);
 	count = 0;

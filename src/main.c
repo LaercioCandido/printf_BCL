@@ -173,6 +173,24 @@ ft_printf("|%4.15s|\n", "42");
 // ft_printf("|%-*.*s|-*.* -7, -3\n", -7, -3, "yolo");
 // printf("|%-*.*s|-*.* -7, -3\n",-7, -3, "teste");
 // ft_printf("|%-*.*s|-*.* -7, -3\n",-7, -3, "teste");
+ft_printf("\n-----------------------------\n");
+ft_printf("\n--------conversion x---------\n");
+ft_printf("\n-----------------------------\n");
+ft_printf("\n");
+ft_printf("%x\n", 3);
+ft_printf("%-x\n", 17);
+ft_printf("%20x\n", 123457);
+ft_printf("%-4x\n", 123456);
+ft_printf("%.20x\n", 123456);
+ft_printf("%x\n", -3);
+//printf(">>%d\n", ft_printf("%x\n", 123456));
+ft_printf("\n");
+printf("%x\n", 3);
+printf("%-x\n", 17);
+printf("%20x\n", 123457);
+printf("%-4x\n", 123456);
+printf("%.20x\n", 123456);
+printf("%x\n", -3);
 
   return 0;
 }
