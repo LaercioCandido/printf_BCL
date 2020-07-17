@@ -16,7 +16,7 @@
 int ft_printf_xa(int n, int len, char c, char * num)
 {
     int count;
-    //mudar nome para xa?
+
     count = 0;
     while (n-- - len)
         count += ft_putchar(c);

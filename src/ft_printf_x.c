@@ -77,7 +77,7 @@ int ft_printf_x(t_flags *flags, va_list args)
 	else if (flags->point > len && flags->point >= flags->width)
 		count += ft_printf_xa(flags->point, len, '0', number);
 	else if (flags->width >= len && len > flags->point)
-			count += ft_printf_xb(flags, len, number);
+		count += ft_printf_xb(flags, len, number);
 	else if (flags->width > flags->point && flags->point >= len)
 		count += ft_printf_xc(flags, len, number);
 	free(number);

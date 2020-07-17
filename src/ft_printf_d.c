@@ -65,8 +65,6 @@ int ft_printf_d(t_flags *flags, va_list args)
 						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
 				count += ft_putnbr(number);
 			}
-
-
 		}
 		else
 		{

@@ -99,10 +99,7 @@ int	ft_printf_p(t_flags *flags, va_list args)
 		len = len + 2;
 		if (flags->minus == 0)
 		{
-			//count += flags->zero ? ft_printf("0x") : 0;
-
 			while (flags->width-- - len)
-					//count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
 					count += ft_putchar(' ');
 			count += dec == 0 ? ft_putstr(number) : ft_printf("0x") + ft_putstr(number);
 		}
