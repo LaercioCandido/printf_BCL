@@ -13,7 +13,7 @@
 #include "../ft_printf.h"
 
 
-int ft_printf_str(int n, int len, char c, char * num)
+int ft_printf_xa(int n, int len, char c, char * num)
 {
     int count;
     //mudar nome para xa?
@@ -31,9 +31,9 @@ int ft_printf_xb(t_flags *flags, int len, char * num)
 
     count = 0;
     if (flags->minus == 0 && flags->zero == 1)
-        count += ft_printf_str(flags->width, len, '0', num);
+        count += ft_printf_xa(flags->width, len, '0', num);
     if (flags->minus == 0 && flags->zero == 0)
-        count += ft_printf_str(flags->width, len, ' ', num);
+        count += ft_printf_xa(flags->width, len, ' ', num);
     else
     {
         count += ft_putstr(num);
@@ -53,10 +53,7 @@ int ft_printf_xc(t_flags *flags, int len, char * num)
     if (flags->minus == 0)
         while (flags->width-- - point)
             count += ft_putchar(' ');
-
-    while (flags->point-- - len)
-        count += ft_putchar('0');
-    count += ft_putstr(num);
+    count += ft_printf_xa(flags->point, len, '0', num);
     if (flags->minus == 1)
         while (flags->width-- - point)
             count += ft_putchar(' ');
