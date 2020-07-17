@@ -51,6 +51,12 @@ int		ft_printf_pct(t_flags *flags);
 int		ft_printf(const char *str, ...);
 int		ft_printf_p(t_flags *flags, va_list args);
 char	*ft_strdup(const char *s1);
+void 	ft_printf_star(t_flags *flags, va_list args);
+int		ft_isnum(int c);
+int 	ft_isconversion(t_flags *flags, va_list args);
+int 	ft_printf_str(int n, int len, char c, char * num);
+int		ft_printf_xb(t_flags *flags, int len, char * num);
+int 	ft_printf_xc(t_flags *flags, int len, char * num);
 //static size_t	nbstrlen(const char *str);
 
 
