@@ -51,6 +51,10 @@ int		ft_printf_pct(t_flags *flags);
 int		ft_printf(const char *str, ...);
 int		ft_printf_p(t_flags *flags, va_list args);
 char	*ft_strdup(const char *s1);
+int		ft_putflags(int condition, char c);
+int		ft_printf_utilsx_b(int condition, t_flags *flags, char *number);
+
+
 
 
 
