@@ -136,7 +136,7 @@ int		ft_printf(const char *str, ...)
 	//int     number;
 	t_flags flags;
 
-		count = 0;
+	count = 0;
 	va_start(args, str);
 	while (*str)
 	{

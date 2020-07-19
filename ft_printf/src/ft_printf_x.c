@@ -82,42 +82,26 @@ int ft_printf_x(t_flags *flags, va_list args)
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
 		count += ft_putstr(number);
 	else if (flags->point > len && flags->point >= flags->width)
-	{
-		while (flags->point-- - len)
-			count += ft_putchar('0');
-		count += ft_putstr(number);
-	}
+		count += ft_putflags(flags->point - len, '0') + ft_putstr(number);
 	else if (flags->width >= len && len > flags->point)
 	{
-
-			if (flags->minus == 0)
-			{
-				while (flags->width-- - len)
-						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
-				count += ft_putstr(number);
-			}
-			else
-			{
-				count += ft_putstr(number);
-				while (flags->width-- - len)
-					count += ft_putchar(' ');
-			}
-
-		}
-		else if (flags->width > flags->point && flags->point >= len)
-		{
-			point = flags->point;
-			if (flags->minus == 0)
-				while (flags->width-- - point)
-					count += ft_putchar(' ');
-
-			while (flags->point-- - len)
-				count += ft_putchar('0');
-			count += ft_putstr(number);
-			if (flags->minus == 1)
-				while (flags->width-- - point)
-					count += ft_putchar(' ');
-		}
+		if (flags->minus == 0 && flags->zero == 1)
+			count += ft_putflags(flags->width - len, '0');
+		else if (flags->minus == 0 && flags->zero == 0)
+			count += ft_putflags(flags->width - len, ' ');
+		count += ft_putstr(number);
+		if (flags->minus == 1)
+			count += ft_putflags(flags->width - len, ' ');
+	}
+	else if (flags->width > flags->point && flags->point >= len)
+	{
+		if (flags->minus == 0)
+			count += ft_putflags(flags->width - flags->point, ' ');
+		count += ft_putflags(flags->point - len, '0');
+		count += ft_putstr(number);
+		if (flags->minus == 1)
+			count += ft_putflags(flags->width - flags->point, ' ');
+	}
 	free(number);
 	return (count);
 }

@@ -26,23 +26,23 @@ ft_printf("|%40.20p|\n", &p);
 ft_printf("|%-40.20p|\n", &p);
 
 ft_printf("\n\n");
-
-printf("|%p|\n", 0);
-printf("|%2.40p|\n", 0);
-printf("|%40.2p|\n", 0);
-printf("|%040.2p|\n", 0);
-printf("|%-40.2p|\n", 0);
-printf("|%40.20p|\n", 0);
-printf("|%-40.20p|\n", 0);
-ft_printf("...2...\n");
-ft_printf("|%p|\n", 0);
-ft_printf("|%2.40p|\n", 0);
-ft_printf("|%40.2p|\n", 0);
-ft_printf("|%040.2p|\n", 0);
-ft_printf("|%-40.2p|\n", 0);
-ft_printf("|%40.20p|\n", 0);
-ft_printf("|%-40.20p|\n", 0);
 */
+printf("|%x|\n", 254);
+printf("|%2.40x|\n", 254);
+printf("|%40.2x|\n", 254);
+printf("|%040.2x|\n", 254);
+printf("|%-40.2x|\n", 254);
+printf("|%40.20x|\n", 254);
+printf("|%-40.20x|\n", 254);
+ft_printf("...2...\n");
+ft_printf("|%x|\n", 254);
+ft_printf("|%2.40x|\n", 254);
+ft_printf("|%40.2x|\n", 254);
+ft_printf("|%040.2x|\n", 254);
+ft_printf("|%-40.2x|\n", 254);
+ft_printf("|%40.20x|\n", 254);
+ft_printf("|%-40.20x|\n", 254);
+
 /*
 printf("|%%| -> |%|\n");
 printf("|%2%| -> | %|\n");
@@ -77,6 +77,8 @@ ft_printf("%%04.5i 42 == |%04.5i|\n", 42);
 ft_printf("%%-5d -42 == |%-5d|\n", -42);
 ft_printf("%x\n", 4294967295u);
 */
+
+/*
 printf("|%0*i|\n", -7, -54);
 ft_printf("|%0*i|\n", -7, -54);
 ft_printf("|%-*.*s|\n", -7, -3, "yolo");
@@ -86,6 +88,8 @@ ft_printf("|%-*s|\n", -32, "abc");
 ft_printf("|%*s|\n", -32, "abc");
 ft_printf("|%*.*i|\n", -14, -3, 94827);
 ft_printf("|%0*i|\n", -7, -54);
+*/
+
 
 
 
