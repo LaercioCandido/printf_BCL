@@ -15,7 +15,6 @@
 int ft_printf_d(t_flags *flags, va_list args)
 {
 	int len;
-	int point;
 	int	number;
 	int count;
 
@@ -30,55 +29,12 @@ int ft_printf_d(t_flags *flags, va_list args)
 	else if (flags->point > len && flags->point >= flags->width)
 	{
 		if (number < 0)
-		{
-			number = number * (-1);
-			flags->point++;
-			count += ft_putchar('-');
-
-		}
+			count += ft_printf_dm(flags);
 		count += ft_printf_da(flags->point, len, '0', number);
 	}
 	else if (flags->width >= len && len > flags->point)
-	{
-
-		if (flags->minus == 0)
-		{
-			if (number < 0 && flags->point == -1)
-			{
-				if (flags->zero)
-					number = number * (-1);
-				count += ft_printf_dm(flags);
-				count += ft_printf_db(flags, len, number);
-			}
-			else if (number < 0)
-				count += ft_printf_db(flags, len, number);
-			else
-				count += ft_printf_db(flags, len, number);
-		}
-		else
-		{
-			count += ft_putnbr(number);
-			while (flags->width-- - len)
-				count += ft_putchar(' ');
-		}
-
-	}
+		count += ft_printf_dd(flags, len, number);
 	else if (flags->width > flags->point && flags->point >= len)
-	{
-		point = number < 0? flags->point + 1: flags->point;
-		if (flags->minus == 0)
-			while (flags->width-- - point)
-				count += ft_putchar(' '); //removi tenario aqui
-		if (number < 0)
-		{
-			count += ft_putchar('-');
-			number = number * (-1);
-			len--;
-		}
-		count += ft_printf_da(flags->point, len, '0', number);
-		if (flags->minus == 1)
-			while (flags->width-- - point)
-				count += ft_putchar(' ');
-	}
+		count += ft_printf_de(flags, len, number);
 	return (count);
 }
