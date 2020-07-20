@@ -158,6 +158,30 @@ ft_printf("04%-4x|\n", 123456);
 ft_printf("05%.20x|\n", 123456);
 ft_printf("06%x|\n", -3);
 
+ft_printf("\n-----------------------------\n");
+ft_printf("\n--------conversion p---------\n");
+ft_printf("\n-----------------------------\n");
+
+void * p;
+p = "abc";
+printf("|%p|\n", p);
+//printf("|%2.40p|\n", &p);
+//printf("|%40.2p|\n", &p);
+//printf("|%040.2p|\n", &p);
+//printf("|%-40.2p|\n", &p);
+//printf("|%40.20p|\n", &p);
+//printf("|%-40.20p|\n", &p);
+ft_printf("...1...\n");
+ft_printf("|%p|\n", p);
+// ft_printf("|%2.40p|\n", &p);
+// ft_printf("|%40.2p|\n", &p);
+// ft_printf("|%040.2p|\n", &p);
+// ft_printf("|%-40.2p|\n", &p);
+// ft_printf("|%40.20p|\n", &p);
+// ft_printf("|%-40.20p|\n", &p);
+ft_printf("\n\n");
+
+
 
   return 0;
 }

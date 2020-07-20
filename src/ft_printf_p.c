@@ -75,7 +75,7 @@ int	ft_printf_p(t_flags *flags, va_list args)
 	int     count;
 	void	*dec;
 	int		len;
-	void 	*number;
+	char 	*number;
 	int 	point;
 
 	ft_printf_star(flags, args);
@@ -89,10 +89,11 @@ int	ft_printf_p(t_flags *flags, va_list args)
 		count += dec == 0 ? ft_putstr(number) : ft_printf("0x") + ft_putstr(number);
 	else if (flags->point > len && flags->point >= flags->width)
 	{
-		count += dec == 0 ? ft_putstr(number) : ft_printf("0x");
-		while (flags->point-- - len)
-			count += ft_putchar('0');
-		count += ft_putstr(number);
+		// count += dec == 0 ? ft_putstr(number) : ft_printf("0x");
+		// while (flags->point-- - len)
+		// 	count += ft_putchar('0');
+		// count += ft_putstr(number);
+		count += ft_printf_pa(flags, len, number, dec);
 	}
 	else if (flags->width >= len && len > flags->point)
 	{

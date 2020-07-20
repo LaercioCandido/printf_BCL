@@ -19,7 +19,7 @@ int ft_printf_dm(t_flags *flags)
     count = 0;
     if(!(flags->point <= 0))
         flags->point++;
-    if (flags->zero || flags->point > flags->width)
+    if (flags->zero || (flags->point > flags->width))
         count += ft_putchar('-');
     return (count);
 }
@@ -31,7 +31,7 @@ int ft_printf_da(int n, int len, char c, int num)
     count = 0;
     while (n-- - len)
         count += ft_putchar(c);
-    if (num < 0)
+    if (num < 0 && !(c == ' '))
         num = num * (-1);
     count += ft_putnbr(num);
     return (count);
@@ -41,8 +41,10 @@ int ft_printf_db(t_flags *flags, int len, int num)
 {
     int count;
 
+
+
     count = 0;
-    if (num < 0)
+    if (num < 0 && flags->zero)
     {
         count += ft_printf_dm(flags);
         num = num * (-1);
@@ -53,18 +55,18 @@ int ft_printf_db(t_flags *flags, int len, int num)
     return (count);
 }
 
+// int  ft_printf_dc(t_flags *flags, int len, int num)
+// {
+//     int count;
+//
+//     count = 0;
+//     while (flags->width-- - len)
+//             count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+//     count += ft_putnbr(num);
+//     return (count);
+// }
+
 int  ft_printf_dc(t_flags *flags, int len, int num)
-{
-    int count;
-
-    count = 0;
-    while (flags->width-- - len)
-            count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
-    count += ft_putnbr(num);
-    return (count);
-}
-
-int  ft_printf_dd(t_flags *flags, int len, int num)
 {
     int count;
     count = 0;
@@ -84,7 +86,7 @@ int  ft_printf_dd(t_flags *flags, int len, int num)
     return (count);
 }
 
-int  ft_printf_de(t_flags *flags, int len, int num)
+int  ft_printf_dd(t_flags *flags, int len, int num)
 {
     int count;
     int point;

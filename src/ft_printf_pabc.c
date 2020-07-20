@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_s.c                                      :+:      :+:    :+:   */
+/*   ft_printf_pabc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bvidigal <bvidigal@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,30 +11,15 @@
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
-#include <stdio.h>
 
-int	ft_printf_s(t_flags *flags, va_list args)
+int  ft_printf_pa(t_flags *flags, int len, char * number, void * dec)
 {
-	int		count;
-	char	*str;
-	int		len;
-	int		point;
+    int count;
 
-	ft_printf_star(flags, args);
-	str = va_arg(args, char *);
-	count = 0;
-	if (str == NULL)
-		str = "(null)";
-	len = ft_strlen(str);
-	point = flags->point > len ? len : flags->point;
-	if (flags->len == 0 || (flags->point == -1 && len >= flags->width))
-		while (*str)
-			count += ft_putchar(*str++);
-	else if (flags->point == -1 && flags->width > len)
-		count += ft_printf_sa(flags, len , str);
-	else if (flags->width > flags->point)
-		count += ft_printf_sb(flags, point , str);
-	else if (flags->width <= flags->point)
-		count += ft_printf_sc(flags, len, point , str);
-	return (count);
+    count = 0;
+    count += dec == 0 ? ft_putstr(number) : ft_printf("0x");
+    while (flags->point-- - len)
+        count += ft_putchar('0');
+    count += ft_putstr(number);
+    return (count);
 }
