@@ -60,6 +60,19 @@ int 	ft_printf_xc(t_flags *flags, int len, char * num);
 int		ft_printf_dm(t_flags *flags);
 int 	ft_printf_da(int n, int len, char c, int num);
 int 	ft_printf_db(t_flags *flags, int len, int num);
+int 	ft_printf_dc(t_flags *flags, int len, int num);
+int  	ft_printf_dd(t_flags *flags, int len, int num);
+int     ft_printf_sa(t_flags *flags, int len, char * str);
+int     ft_printf_sb(t_flags *flags, int point, char * str);
+int     ft_printf_sc(t_flags *flags, int len, int point, char * str);
+int  	ft_printf_pa(t_flags *flags, int len, char * number, void * dec);
+int  	ft_printf_pb(t_flags *flags, int len, char * number, void * dec);
+int  	ft_printf_pc(t_flags *flags, int len, char * number, void * dec);
+int 	ft_printf_ua(t_flags *flags, int len, unsigned int number);
+int 	ft_printf_ub(t_flags *flags, int len, unsigned int number);
+
+
+
 
 
 //static size_t	nbstrlen(const char *str);
