@@ -41,8 +41,6 @@ int ft_printf_db(t_flags *flags, int len, int num)
 {
     int count;
 
-
-
     count = 0;
     if (num < 0 && flags->zero)
     {
@@ -69,6 +67,7 @@ int ft_printf_db(t_flags *flags, int len, int num)
 int  ft_printf_dc(t_flags *flags, int len, int num)
 {
     int count;
+
     count = 0;
     if (flags->minus == 0)
     {

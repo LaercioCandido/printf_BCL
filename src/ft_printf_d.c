@@ -33,8 +33,8 @@ int ft_printf_d(t_flags *flags, va_list args)
 		count += ft_printf_da(flags->point, len, '0', number);
 	}
 	else if (flags->width >= len && len > flags->point)
-		count += ft_printf_dd(flags, len, number);
+		count += ft_printf_dc(flags, len, number);
 	else if (flags->width > flags->point && flags->point >= len)
-		count += ft_printf_de(flags, len, number);
+		count += ft_printf_dd(flags, len, number);
 	return (count);
 }

@@ -54,16 +54,13 @@ int		ft_putnbr_unsigned(unsigned int n)
 int ft_printf_u(t_flags *flags, va_list args)
 {
 	int     count;
-	//int		dec;
 	int		len;
 	unsigned int 	number;
-	int 	point;
 
 	ft_printf_star(flags, args);
 	number = va_arg(args, unsigned int);
 	count = 0;
 	len = ft_numlen_unsigned(number);
-	//printf("len: %d", len);
 	if(flags->point == 0 && number == 0)
 		return (count);
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
@@ -75,36 +72,8 @@ int ft_printf_u(t_flags *flags, va_list args)
 		count += ft_putnbr_unsigned(number);
 	}
 	else if (flags->width >= len && len > flags->point)
-	{
-
-			if (flags->minus == 0)
-			{
-				while (flags->width-- - len)
-						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
-				count += ft_putnbr_unsigned(number);
-			}
-			else
-			{
-				count += ft_putnbr_unsigned(number);
-				while (flags->width-- - len)
-					count += ft_putchar(' ');
-			}
-
-		}
-		else if (flags->width > flags->point && flags->point >= len)
-		{
-			point = flags->point;
-			if (flags->minus == 0)
-				while (flags->width-- - point)
-					count += ft_putchar(' ');
-
-			while (flags->point-- - len)
-				count += ft_putchar('0');
-			count += ft_putnbr_unsigned(number);
-			if (flags->minus == 1)
-				while (flags->width-- - point)
-					count += ft_putchar(' ');
-		}
-	//free(number);
+		count += ft_printf_ua(flags, len, number);
+	else if (flags->width > flags->point && flags->point >= len)
+		count += ft_printf_ub(flags, len, number);
 	return (count);
 }

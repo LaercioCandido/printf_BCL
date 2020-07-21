@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_pabc.c                                   :+:      :+:    :+:   */
+/*   ft_printf_uabc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bvidigal <bvidigal@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,56 +12,43 @@
 
 #include "../ft_printf.h"
 
-int  ft_printf_pa(t_flags *flags, int len, char * number, void * dec)
+int ft_printf_ua(t_flags *flags, int len, unsigned int number)
 {
     int count;
 
     count = 0;
-    count += dec == 0 ? ft_putstr(number) : ft_printf("0x");
-    while (flags->point-- - len)
-        count += ft_putchar('0');
-    count += ft_putstr(number);
-    return (count);
-}
-
-int  ft_printf_pb(t_flags *flags, int len, char * number, void * dec)
-{
-    int count;
-
-    count = 0;
-    len = len + 2;
     if (flags->minus == 0)
     {
         while (flags->width-- - len)
-                count += ft_putchar(' ');
-        count += dec == 0 ? ft_putstr(number) : ft_printf("0x") + ft_putstr(number);
+                count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+        count += ft_putnbr_unsigned(number);
     }
     else
     {
-        count += dec == 0 ? ft_putstr(number) :  ft_printf("0x") + ft_putstr(number);
+        count += ft_putnbr_unsigned(number);
         while (flags->width-- - len)
             count += ft_putchar(' ');
     }
     return (count);
 }
 
-int  ft_printf_pc(t_flags *flags, int len, char * number, void * dec)
+
+int ft_printf_ub(t_flags *flags, int len, unsigned int number)
 {
     int count;
     int point;
-
+    
     count = 0;
-    point = dec == 0 ? flags->point : flags->point + 2;
+    point = flags->point;
     if (flags->minus == 0)
         while (flags->width-- - point)
             count += ft_putchar(' ');
-    if (dec != 0)
-        count += ft_printf("0x");
-    while (flags->point-- - len  && flags->minus == 0)
-        count += dec == 0? ft_putchar(' ') : ft_putchar('0');
-    count += ft_putstr(number);
+
+    while (flags->point-- - len)
+        count += ft_putchar('0');
+    count += ft_putnbr_unsigned(number);
     if (flags->minus == 1)
-        while (flags->width-- - point + len + 5)
+        while (flags->width-- - point)
             count += ft_putchar(' ');
     return (count);
 }
