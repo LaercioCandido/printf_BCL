@@ -21,6 +21,8 @@ int	ft_printf_s(t_flags *flags, va_list args)
 	int		point;
 
 	ft_printf_star(flags, args);
+	if (flags->point < 0)
+		flags->point = -1;
 	str = va_arg(args, char *);
 	count = 0;
 	if (str == NULL)
