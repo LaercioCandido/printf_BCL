@@ -54,6 +54,7 @@ int		ft_printf_x(t_flags *flags, va_list args)
 	len = ft_strlen(number);
 	if (flags->point == 0 && dec == 0)
 	{
+		count += ft_putflags(flags->width, ' ');
 		while (flags->width--)
 			count += ft_putchar(' ');
 		return (count);

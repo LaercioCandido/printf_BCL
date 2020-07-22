@@ -6,15 +6,11 @@
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 22:58:05 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/21 22:58:08 by lcandido         ###   ########.fr       */
+/*   Updated: 2020/07/21 23:21:57 by lcandido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
-#include <stdio.h>
-
-
-
 
 int		ft_numlen(int num)
 {
