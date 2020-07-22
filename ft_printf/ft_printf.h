@@ -56,6 +56,11 @@ int		ft_printf_utils_xa(t_flags *flags, int len, char *number);
 int		ft_printf_utils_xb(t_flags *flags, int len, char *number);
 int		ft_printf_utils_ua(t_flags *flags, int len, int number);
 int		ft_printf_utils_ub(t_flags *flags, int len, int number);
+void	ft_printf_star(t_flags *flags, va_list args);
+int 	ft_isconversion(t_flags *flags, va_list args);
+int		ft_isnum(int c);
+
+
 
 
 
