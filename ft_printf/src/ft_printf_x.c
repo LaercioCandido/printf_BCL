@@ -47,15 +47,7 @@ int		ft_printf_x(t_flags *flags, va_list args)
 	char	*number;
 	int		point;
 
-	if (flags->star == 1)
-		flags->width = va_arg(args, int);
-	else if (flags->star == 2)
-		flags->point = va_arg(args, int);
-	else if (flags->star == 3)
-	{
-		flags->width = va_arg(args, int);
-		flags->point = va_arg(args, int);
-	}
+	ft_printf_star2(flags, args);
 	dec = va_arg(args, int);
 	number = ft_itoa_base((unsigned int)dec, flags->type);
 	count = 0;

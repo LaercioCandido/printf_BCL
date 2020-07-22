@@ -6,7 +6,7 @@
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/18 18:16:11 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/22 19:19:23 by lcandido         ###   ########.fr       */
+/*   Updated: 2020/07/22 19:29:46 by lcandido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,15 @@ int	ft_printf_utils_xb(t_flags *flags, int len, char *number)
 	return (count);
 }
 
+void ft_printf_star2(t_flags *flags, va_list args)
+{
+	if (flags->star == 1)
+		flags->width = va_arg(args, int);
+	else if (flags->star == 2)
+		flags->point = va_arg(args, int);
+	else if (flags->star == 3)
+	{
+		flags->width = va_arg(args, int);
+		flags->point = va_arg(args, int);
+	}
+}
