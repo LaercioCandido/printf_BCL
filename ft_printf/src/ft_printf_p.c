@@ -6,136 +6,72 @@
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 16:23:10 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/13 20:36:28 by lcandido         ###   ########.fr       */
+/*   Updated: 2020/07/21 22:26:04 by lcandido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-static size_t	nbstrlen(const char *str)
+int		ft_printf_p(t_flags *flags, va_list args)
 {
-	size_t	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-char		*ft_strjoin(char const *s1, char const *s2)
-{
-	size_t	i;
-	size_t	j;
-	size_t	total;
-	char	*substring;
-
-	total = nbstrlen(s1) + nbstrlen(s2) + 1;
-	substring = (char *)malloc(total * sizeof(char));
-	if (!substring)
-		return (0);
-	i = 0;
-	while (s1 && s1[i] != '\0')
-	{
-		substring[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2 && s2[j] != '\0')
-	{
-		substring[i + j] = s2[j];
-		j++;
-	}
-	substring[i + j] = '\0';
-	return (substring);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	size_t			len;
-	char			*cpy;
-	unsigned int	i;
-
-	len = ft_strlen(s1) + 1;
-	if (!(cpy = malloc(sizeof(char) * len)))
-		return (0);
-	i = 0;
-	while (i < len)
-	{
-		cpy[i] = s1[i];
-		i++;
-	}
-	cpy[len] = '\0';
-	return (cpy);
-}
-
-int	ft_printf_p(t_flags *flags, va_list args)
-{
-	int     count;
-	void	*dec;
+	int		count;
+	unsigned long int		end_dec;
 	int		len;
-	void 	*number;
-	int 	point;
+	char	*end_hex;
+	int		point;
 
-	if (flags->star == 1)
-		flags->width = va_arg(args, int);
-	else if (flags->star == 2)
-		flags->point = va_arg(args, int);
-	else if (flags->star == 3)
-	{
-		flags->width = va_arg(args, int);
-		flags->point = va_arg(args, int);
-	}
-	dec = va_arg(args, void *);
-	number = dec == 0 ? ft_strdup("(nil)") : ft_itoa_base((unsigned long int)(dec), flags->type);
+	ft_printf_star(flags, args);
+	end_dec = va_arg(args, unsigned long int);
+	end_hex = ft_itoa_base(end_dec, 'x');
 	count = 0;
-	len = 12;// ft_strlen(number);
-	if(flags->point == 0 && dec == 0)
+	len = ft_strlen(end_hex);
+	if (flags->point == 0 && end_dec == 0)
+	{
+		while (flags->width-- - 2 > 0)
+			count +=  ft_putchar(' ');
+		count += ft_printf("0x");
 		return (count);
+	}
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
-		count += dec == 0 ? ft_putstr(number) : ft_printf("0x") + ft_putstr(number);
+		count += ft_printf("0x%s", end_hex);
 	else if (flags->point > len && flags->point >= flags->width)
 	{
-		count += dec == 0 ? ft_putstr(number) : ft_printf("0x");
+		count = ft_printf("0x");
 		while (flags->point-- - len)
 			count += ft_putchar('0');
-		count += ft_putstr(number);
+		count += ft_printf(end_hex);
 	}
 	else if (flags->width >= len && len > flags->point)
 	{
 		len = len + 2;
 		if (flags->minus == 0)
 		{
-			//count += flags->zero ? ft_printf("0x") : 0;
-
-			while (flags->width-- - len)
-					//count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
-					count += ft_putchar(' ');
-			count += dec == 0 ? ft_putstr(number) : ft_printf("0x") + ft_putstr(number);
+			while (flags->width-- - len > 0)
+				count += (flags->zero && flags->point == -1)
+					? ft_putchar('0') : ft_putchar(' ');
+			count += ft_printf("0x%s", end_hex);
 		}
 		else
 		{
-			count += dec == 0 ? ft_putstr(number) :  ft_printf("0x") + ft_putstr(number);
-			while (flags->width-- - len)
+			count += ft_printf("0x%s", end_hex);
+			while (flags->width-- - len > 0)
 				count += ft_putchar(' ');
 		}
 	}
 	else if (flags->width > flags->point && flags->point >= len)
 	{
-		point = dec == 0 ? flags->point : flags->point + 2;
+		point = flags->point;
 		if (flags->minus == 0)
 			while (flags->width-- - point)
 				count += ft_putchar(' ');
-		if (dec != 0)
-			count += ft_printf("0x");
-		while (flags->point-- - len  && flags->minus == 0)
-			count += dec == 0? ft_putchar(' ') : ft_putchar('0');
-		count += ft_putstr(number);
+		count += ft_printf("0x");
+		while (flags->point-- - len)
+			count += ft_putchar('0');
+		count += ft_printf(end_hex);
 		if (flags->minus == 1)
-			while (flags->width-- - point + len + 5)
+			while (flags->width-- - point)
 				count += ft_putchar(' ');
 	}
-	free(number);
+	free(end_hex);
 	return (count);
 }

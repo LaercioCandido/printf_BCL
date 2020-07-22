@@ -12,35 +12,21 @@
 
 #include "../ft_printf.h"
 
-int ft_printf_d(t_flags *flags, va_list args)
+int	ft_printf_d(t_flags *flags, va_list args)
 {
 	int len;
 	int point;
 	int	number;
 	int count;
 
-	if (flags->star == 1)
-		flags->width = va_arg(args, int);
-	else if (flags->star == 2)
-		flags->point = va_arg(args, int);
-	else if (flags->star == 3)
-	{
-		flags->width = va_arg(args, int);
-		flags->point = va_arg(args, int);
-	}
-	if (flags->width < 0)
-	{
-		flags->width = flags->width * -1;
-		flags->minus = 1;
-	}
-	if (flags->point < 0)
-		flags->point = -1;
+	ft_printf_star(flags, args);
 	number = va_arg(args, int);
 	len = ft_numlen(number);
 	count = 0;
-	if(flags->point == 0 && number == 0) // qq isso aqui faz mesmo?
+	if (flags->point == 0 && number == 0)
 	{
-		//ft_putchar('H');
+		while (flags->width--)
+			count += ft_putchar(' ');
 		return (count);
 	}
 	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
@@ -59,32 +45,39 @@ int ft_printf_d(t_flags *flags, va_list args)
 	}
 	else if (flags->width >= len && len > flags->point)
 	{
-
 		if (flags->minus == 0)
 		{
 			if (number < 0 && flags->point == -1)
 			{
 				number = number * (-1);
 				flags->point++;
-				count += ft_putchar('-');
-				while (flags->width-- - len)
-					count += flags->zero ? ft_putchar('0') : ft_putchar('H'); //esse tenario nao roda else
+				if (flags->zero)
+				{
+					count += ft_putchar('-');
+					while (flags->width-- - len)
+						count += ft_putchar('0');
+				}
+				else
+				{
+					while (flags->width-- - len)
+						count += ft_putchar(' ');
+					count += ft_putchar('-');
+				}
 				count += ft_putnbr(number);
 			}
 			else if (number < 0)
 			{
 				while ((flags->point >= 0) && (flags->width-- - len))
-					count += flags->zero ? ft_putchar('0') : ft_putchar(' '); //removi tenario
+					count += ft_putchar(' ');
 				count += ft_putnbr(number);
 			}
 			else
 			{
 				while (flags->width-- - len)
-						count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
+					count += (flags->zero && flags->point == -1)
+						? ft_putchar('0') : ft_putchar(' ');
 				count += ft_putnbr(number);
 			}
-
-
 		}
 		else
 		{
@@ -92,21 +85,19 @@ int ft_printf_d(t_flags *flags, va_list args)
 			while (flags->width-- - len)
 				count += ft_putchar(' ');
 		}
-
 	}
 	else if (flags->width > flags->point && flags->point >= len)
 	{
-		point = number < 0? flags->point + 1: flags->point;
+		point = number < 0 ? flags->point + 1 : flags->point;
 		if (flags->minus == 0)
 			while (flags->width-- - point)
-				count += ft_putchar(' '); //removi tenario aqui
+				count += ft_putchar(' ');
 		if (number < 0)
 		{
 			count += ft_putchar('-');
 			number = number * (-1);
 			len--;
 		}
-
 		while (flags->point-- - len)
 			count += ft_putchar('0');
 		count += ft_putnbr(number);
