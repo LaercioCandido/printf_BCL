@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils_u.c                                :+:      :+:    :+:   */
+/*   ft_printf_u_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 17:02:10 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/21 18:58:52 by lcandido         ###   ########.fr       */
+/*   Updated: 2020/07/21 23:15:40 by lcandido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int	ft_printf_utils_ub(t_flags *flags, int len, int number)
 	count += ft_putflags(flags->point - len, '0');
 	count += ft_putnbr_unsigned(number);
 	if (flags->minus == 1)
-		ft_putflags(flags->width - flags->point, ' ');
+		count += ft_putflags(flags->width - flags->point, ' ');
 	return (count);
 }

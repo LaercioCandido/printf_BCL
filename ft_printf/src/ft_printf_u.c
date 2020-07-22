@@ -6,7 +6,7 @@
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 01:41:32 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/21 22:44:45 by lcandido         ###   ########.fr       */
+/*   Updated: 2020/07/21 23:14:16 by lcandido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,11 @@ int		ft_printf_u(t_flags *flags, va_list args)
 	count = 0;
 	len = ft_numlen_unsigned(number);
 	if (flags->point == 0 && number == 0)
-	{
 		count += ft_putflags(flags->width, ' ');
-		return (count);
-	}
-	if (flags->len == 0 || (len >= flags->width && len >= flags->point))
+	else if (flags->len == 0 || (len >= flags->width && len >= flags->point))
 		count += ft_putnbr_unsigned(number);
 	else if (flags->point > len && flags->point >= flags->width)
-	{
-		count += ft_putflags(flags->point - len, '0');
-		count += ft_putnbr_unsigned(number);
-	}
+		count += ft_putflags(flags->point - len, '0') + ft_putnbr_unsigned(number);
 	else if (flags->width >= len && len > flags->point)
 		count += ft_printf_utils_ua(flags, len, number);
 	else if (flags->width > flags->point && flags->point >= len)

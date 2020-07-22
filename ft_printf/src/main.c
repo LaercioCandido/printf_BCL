@@ -27,17 +27,17 @@ ft_printf("|%-40.20p|\n", &p);
 
 ft_printf("\n\n");
 */
-printf("|%u|\n", -254);
-printf("|%2.40u|\n", -254);
-printf("|%40.2u|\n", -254);
+printf("|%u|\n", 0);
+printf("|%2.40u|\n", 0);
+printf("|%40.0u|\n", 0);
 printf("|%040.2u|\n", -254);
 printf("|%-40.2u|\n", 254);
 printf("|%40.20u|\n", 254);
 printf("|%-40.20u|\n", 254);
 ft_printf("...2...\n");
-ft_printf("|%u|\n", -254);
-ft_printf("|%2.40u|\n", -254);
-ft_printf("|%40.2u|\n", -254);
+ft_printf("|%u|\n", 0);
+ft_printf("|%2.40u|\n", 0);
+ft_printf("|%40.0u|\n", 0);
 ft_printf("|%040.2u|\n", -254);
 ft_printf("|%-40.2u|\n", 254);
 ft_printf("|%40.20u|\n", 254);
