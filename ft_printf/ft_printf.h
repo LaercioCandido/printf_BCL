@@ -43,5 +43,20 @@ int		ft_printf_u(t_flags *flags, va_list args);
 int		ft_printf_p(t_flags *flags, va_list args);
 int		ft_printf_pct(t_flags *flags);
 int		ft_printf(const char *str, ...);
+int     ft_printf_sa(t_flags *flags, int len, char * str);
+int     ft_printf_sb(t_flags *flags, int point, char * str);
+int     ft_printf_sc(t_flags *flags, int len, int point, char * str);
+void 	ft_printf_star(t_flags *flags, va_list args);
+int		ft_isconversion(t_flags *flags, va_list args);
+int		ft_printf_ua(t_flags *flags, int len, int number);
+int		ft_printf_ub(t_flags *flags, int len, int number);
+int		ft_printf_xa(t_flags *flags, int len, char *number);
+int		ft_printf_xb(t_flags *flags, int len, char *number);
+int    	ft_printf_pa(t_flags *flags);
+int    	ft_printf_pb(t_flags *flags, int len, char *end_hex);
+int    	ft_printf_pc(t_flags *flags, int len, char *end_hex);
+int    	ft_printf_pd(t_flags *flags, int len, char *end_hex);
+
+
 
 #endif
