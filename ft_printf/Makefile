@@ -12,7 +12,7 @@
 
 NAME = libftprintf.a
 
-SRCS = src/*.c
+SRCS = $(filter-out src/main.c, $(wildcard src/*.c))
 
 OBJECTS = *.o
 
