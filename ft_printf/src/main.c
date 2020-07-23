@@ -27,6 +27,8 @@ ft_printf("|%-40.20p|\n", &p);
 
 ft_printf("\n\n");
 */
+
+/*
 printf("|%u|\n", 0);
 printf("|%2.40u|\n", 0);
 printf("|%40.0u|\n", 0);
@@ -58,6 +60,7 @@ ft_printf("|%040.2u|\n", -254);
 ft_printf("|%040.2u|\n", 254);
 ft_printf("|%040u|\n", 254);
 ft_printf("|%-040u|\n", 254);
+*/
 
 /*
 printf("|%%| -> |%|\n");
@@ -105,6 +108,22 @@ ft_printf("|%*s|\n", -32, "abc");
 ft_printf("|%*.*i|\n", -14, -3, 94827);
 ft_printf("|%0*i|\n", -7, -54);
 */
+
+printf("|%d|\n", 0);
+printf("|%2.40d|\n", 0);
+printf("|%40.0d|\n", 0);
+printf("|%040.2d|\n", -254);
+printf("|%-40.2d|\n", -254);
+printf("|%40.20d|\n", 254);
+printf("|%-40.20d|\n", 254);
+ft_printf("...2...\n");
+ft_printf("|%d|\n", 0);
+ft_printf("|%2.40d|\n", 0);
+ft_printf("|%40.0d|\n", 0);
+ft_printf("|%040.2d|\n", -254);
+ft_printf("|%-40.2d|\n", -254);
+ft_printf("|%40.20d|\n", 254);
+ft_printf("|%-40.20d|\n", 254);
 
 
 
