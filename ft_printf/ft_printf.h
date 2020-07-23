@@ -56,6 +56,8 @@ int    	ft_printf_pa(t_flags *flags);
 int    	ft_printf_pb(t_flags *flags, int len, char *end_hex);
 int    	ft_printf_pc(t_flags *flags, int len, char *end_hex);
 int    	ft_printf_pd(t_flags *flags, int len, char *end_hex);
+int 	ft_printf_dm(t_flags *flags);
+int     ft_printf_da(int n, char c);
 
 
 
