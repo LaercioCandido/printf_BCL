@@ -22,6 +22,6 @@ int	ft_printf_pct(t_flags *flags)
 	while (flags->width-- > 1)
 		count += flags->zero ? ft_putchar('0') : ft_putchar(' ');
 	if (!flags->minus)
-		count+= ft_putchar('%');
+		count += ft_putchar('%');
 	return (count);
 }

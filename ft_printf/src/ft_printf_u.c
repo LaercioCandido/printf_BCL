@@ -6,13 +6,13 @@
 /*   By: lcandido <lcandido@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 01:41:32 by lcandido          #+#    #+#             */
-/*   Updated: 2020/07/21 23:14:16 by lcandido         ###   ########.fr       */
+/*   Updated: 2020/07/23 22:30:11 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int		ft_numlen_unsigned(unsigned int num)
+static int	ft_numlen_unsigned(unsigned int num)
 {
 	int i;
 
@@ -25,7 +25,7 @@ int		ft_numlen_unsigned(unsigned int num)
 	return (i);
 }
 
-int		ft_putnbr_unsigned(unsigned int n)
+static int	ft_putnbr_unsigned(unsigned int n)
 {
 	int	count;
 
@@ -36,7 +36,40 @@ int		ft_putnbr_unsigned(unsigned int n)
 	return (count);
 }
 
-int		ft_printf_u(t_flags *flags, va_list args)
+static int	ft_printf_ua(t_flags *flags, int len, int number)
+{
+	int count;
+
+	count = 0;
+	if (flags->minus == 0)
+	{
+		if (flags->zero && flags->point == -1)
+			count += ft_putflags(flags->width - len, '0');
+		else
+			count += ft_putflags(flags->width - len, ' ');
+		count += ft_putnbr_unsigned(number);
+	}
+	else
+		count += ft_putnbr_unsigned(number)
+		+ ft_putflags(flags->width - len, ' ');
+	return (count);
+}
+
+static int	ft_printf_ub(t_flags *flags, int len, int number)
+{
+	int count;
+
+	count = 0;
+	if (flags->minus == 0)
+		count += ft_putflags(flags->width - flags->point, ' ');
+	count += ft_putflags(flags->point - len, '0');
+	count += ft_putnbr_unsigned(number);
+	if (flags->minus == 1)
+		count += ft_putflags(flags->width - flags->point, ' ');
+	return (count);
+}
+
+int			ft_printf_u(t_flags *flags, va_list args)
 {
 	int				count;
 	int				len;
@@ -51,7 +84,8 @@ int		ft_printf_u(t_flags *flags, va_list args)
 	else if (flags->len == 0 || (len >= flags->width && len >= flags->point))
 		count += ft_putnbr_unsigned(number);
 	else if (flags->point > len && flags->point >= flags->width)
-		count += ft_putflags(flags->point - len, '0') + ft_putnbr_unsigned(number);
+		count += ft_putflags(flags->point - len, '0')
+					+ ft_putnbr_unsigned(number);
 	else if (flags->width >= len && len > flags->point)
 		count += ft_printf_ua(flags, len, number);
 	else if (flags->width > flags->point && flags->point >= len)

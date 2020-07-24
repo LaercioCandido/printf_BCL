@@ -92,5 +92,6 @@ int		ft_printf(const char *str, ...)
 			count += ft_putchar(*str);
 		str++;
 	}
+	va_end(args);
 	return (count);
 }

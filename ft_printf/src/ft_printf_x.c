@@ -12,7 +12,7 @@
 
 #include "../ft_printf.h"
 
-int		digitcounter(unsigned long int n)
+static int	digitcounter(unsigned long int n)
 {
 	if (!(n / 16))
 		return (1);
@@ -20,7 +20,7 @@ int		digitcounter(unsigned long int n)
 		return (digitcounter(n / 16) + 1);
 }
 
-char	*ft_itoa_base(unsigned long int n, char type)
+char		*ft_itoa_base(unsigned long int n, char type)
 {
 	char	*hexnumber;
 	int		len;
@@ -39,13 +39,41 @@ char	*ft_itoa_base(unsigned long int n, char type)
 	return (hexnumber);
 }
 
-int		ft_printf_x(t_flags *flags, va_list args)
+static int	ft_printf_xa(t_flags *flags, int len, char *number)
+{
+	int count;
+
+	count = 0;
+	if (flags->minus == 0 && flags->zero == 1)
+		count += ft_putflags(flags->width - len, '0');
+	else if (flags->minus == 0 && flags->zero == 0)
+		count += ft_putflags(flags->width - len, ' ');
+	count += ft_printf(number);
+	if (flags->minus == 1)
+		count += ft_putflags(flags->width - len, ' ');
+	return (count);
+}
+
+static int	ft_printf_xb(t_flags *flags, int len, char *number)
+{
+	int count;
+
+	count = 0;
+	if (flags->minus == 0)
+		count += ft_putflags(flags->width - flags->point, ' ');
+	count += ft_putflags(flags->point - len, '0');
+	count += ft_printf(number);
+	if (flags->minus == 1)
+		count += ft_putflags(flags->width - flags->point, ' ');
+	return (count);
+}
+
+int			ft_printf_x(t_flags *flags, va_list args)
 {
 	int		count;
 	int		dec;
 	int		len;
 	char	*number;
-	int		point;
 
 	ft_printf_star(flags, args);
 	dec = va_arg(args, int);
