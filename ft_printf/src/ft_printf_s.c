@@ -45,13 +45,18 @@ static int	ft_printf_sc(t_flags *flags, int len, int point, char *str)
 	int count;
 
 	count = 0;
-	while ((flags->point-- > len) && flags->width-- > len)
+	if (flags->point == 0 && flags->width == 0)
+		return (0);
+	while ((flags->point-- > len) && flags->width-- > len && !flags->minus)
 		count += ft_putchar(' ');
 	while (!len && flags->width-- > 0 && !flags->minus)
 		count += ft_putchar(' ');
 	while (point-- && *str)
+	{
 		count += ft_putchar(*str++);
-	while (flags->minus && flags->width-- && *str)
+		flags->width--;
+	}
+	while (flags->minus && flags->width-- >= 0)
 		count += ft_putchar(' ');
 	return (count);
 }

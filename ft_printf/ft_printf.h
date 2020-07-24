@@ -44,7 +44,7 @@ int				ft_printf_s(t_flags *flags, va_list args);
 int				ft_printf_x(t_flags *flags, va_list args);
 int				ft_printf_u(t_flags *flags, va_list args);
 int				ft_printf_p(t_flags *flags, va_list args);
-int				ft_printf_pct(t_flags *flags);
+int				ft_printf_pct(t_flags *flags, va_list args);
 int				ft_printf(const char *str, ...);
 void			ft_printf_star(t_flags *flags, va_list args);
 

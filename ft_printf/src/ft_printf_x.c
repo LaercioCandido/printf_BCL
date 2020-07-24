@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 16:38:47 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/15 19:26:07 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/23 23:01:43 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ static int	ft_printf_xa(t_flags *flags, int len, char *number)
 	int count;
 
 	count = 0;
-	if (flags->minus == 0 && flags->zero == 1)
+	if (flags->minus == 0 && flags->zero == 1 && flags->point == -1)
 		count += ft_putflags(flags->width - len, '0');
+	else if (flags->minus == 0 && flags->zero == 1)
+		count += ft_putflags(flags->width - len, ' ');
 	else if (flags->minus == 0 && flags->zero == 0)
 		count += ft_putflags(flags->width - len, ' ');
 	count += ft_printf(number);

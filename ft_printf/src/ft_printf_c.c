@@ -17,6 +17,7 @@ int	ft_printf_c(t_flags *flags, va_list args)
 	int		count;
 	char	c;
 
+	ft_printf_star(flags, args);
 	c = va_arg(args, int);
 	count = 0;
 	if (flags->minus == 1)

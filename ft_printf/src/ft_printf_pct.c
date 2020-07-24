@@ -12,10 +12,11 @@
 
 #include "../ft_printf.h"
 
-int	ft_printf_pct(t_flags *flags)
+int	ft_printf_pct(t_flags *flags, va_list args)
 {
 	int		count;
 
+	ft_printf_star(flags, args);
 	count = 0;
 	if (flags->minus)
 		count += ft_putchar('%');

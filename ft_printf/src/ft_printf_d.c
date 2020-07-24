@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 21:11:38 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/15 19:28:51 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/23 23:12:02 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static int	ft_printf_dc(t_flags *flags, int len, int number)
 	{
 		count += ft_putchar('-');
 		number = number * (-1);
-		len--;
 	}
 	count += ft_putflags(flags->point - len, '0') + ft_putnbr(number);
 	if (flags->minus == 1)
@@ -88,18 +87,18 @@ int			ft_printf_d(t_flags *flags, va_list args)
 	count = 0;
 	if (flags->point == 0 && number == 0)
 		count += ft_putflags(flags->width, ' ');
-	else if (flags->len == 0 || (len >= flags->width && len >= flags->point))
+	else if (flags->len == 0 || (len >= flags->width && len > flags->point))
 		count += ft_putnbr(number);
-	else if (flags->point > len && flags->point >= flags->width)
+	else if (flags->point >= len && flags->point >= flags->width)
 		count += ft_printf_da(flags, len, number);
 	else if (flags->width >= len && len > flags->point)
 	{
 		if (flags->minus == 0)
-			ft_printf_db(flags, len, number);
+			count += ft_printf_db(flags, len, number);
 		else
 			count += ft_putnbr(number) + ft_putflags(flags->width - len, ' ');
 	}
 	else if (flags->width > flags->point && flags->point >= len)
-		ft_printf_dc(flags, len, number);
+		count += ft_printf_dc(flags, len, number);
 	return (count);
 }

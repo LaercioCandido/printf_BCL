@@ -6,7 +6,7 @@
 /*   By: rcamilo- <rcamilo-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 14:35:51 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/15 19:19:13 by rcamilo-         ###   ########.fr       */
+/*   Updated: 2020/07/23 22:49:27 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int		ft_printf(const char *str, ...)
 			init(&flags);
 			str++;
 			readflag(&flags, str);
-			if ((count += ft_isconversion(&flags, args)))
-				str = str + flags.len;
+			count += ft_isconversion(&flags, args);
+			str = str + flags.len;
 		}
 		else
 			count += ft_putchar(*str);
