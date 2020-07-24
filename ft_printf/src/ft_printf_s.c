@@ -6,7 +6,7 @@
 /*   By: camilo <camilo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 16:38:47 by rcamilo-          #+#    #+#             */
-/*   Updated: 2020/07/24 01:13:58 by camilo           ###   ########.fr       */
+/*   Updated: 2020/07/24 02:10:44 by camilo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,19 @@ static int	ft_printf_sc(t_flags *flags, int len, int point, char *str)
 	count = 0;
 	if (flags->point == 0 && flags->width == 0)
 		return (0);
-	while ((flags->point-- > len) && flags->width-- > len && !flags->minus)
+	while ((flags->point-- > len) && (flags->width > len) && !flags->minus)
+	{
 		count += ft_putchar(' ');
-	while (!len && flags->width-- > 0 && !flags->minus)
+		flags->width--;
+	}
+	while (!len && (flags->width-- > 0) && !flags->minus)
 		count += ft_putchar(' ');
 	while (point-- && *str)
 	{
 		count += ft_putchar(*str++);
 		flags->width--;
 	}
-	while (flags->minus && flags->width-- >= 0)
+	while (flags->minus && flags->width-- > 0)
 		count += ft_putchar(' ');
 	return (count);
 }
